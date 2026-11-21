@@ -1312,7 +1312,7 @@ function buildGallery(slug){
 /* ---------------- TRAVEL WORLD ---------------- */
 /* A wall of frames in columns, each with its place and a line about it underneath; the row under the title filters by country.
    TWR: the regions (c: country, n: name [Turkish, English]).
-   TW: each frame by its number — r: region, s: the spot where it is known (left out where he will name it himself), d: one line about the frame.
+   TW: each frame by its number — x: shown without a caption (he asked for these to stand bare; d then only describes the frame to whoever cannot see it), r: region, s: the spot where it is known (left out where he will name it himself), d: one line about the frame.
    The order of the wall is the order of DATA.travel (tools/mkdata.py). */
 const TWR={bkk:{c:'th',n:['Bangkok · Tayland','Bangkok · Thailand']},np:{c:'th',n:['Nakhon Pathom · Tayland','Nakhon Pathom · Thailand']},cm:{c:'th',n:['Chiang Mai · Tayland','Chiang Mai · Thailand']},
  kr:{c:'th',n:['Krabi · Tayland','Krabi · Thailand']},pp:{c:'th',n:['Phi Phi Adaları · Tayland','Phi Phi Islands · Thailand']},th:{c:'th',n:['Tayland','Thailand']},
@@ -1328,37 +1328,37 @@ const TW={
  '153':{r:'bali',s:TWS.teg,d:['Sis dağılırken palmiyeler.','Palms as the mist lifts.']},
  '154':{r:'bali',s:TWS.teg,d:['Güneş, sisin içinden teraslara iniyor.','The sun coming down through the mist onto the terraces.']},
  '155':{r:'bali',s:TWS.teg,d:['Sabahın ilk ışığında pirinç terasları.','The rice terraces in the first light of morning.']},
- '156':{r:'bkk',d:['Beyaz duvarda altın yaldızlı bir tapınak kapısı.','A gilded temple doorway in a white wall.']},
+ '156':{x:1,r:'bkk',d:['Beyaz duvarda altın yaldızlı bir tapınak kapısı.','A gilded temple doorway in a white wall.']},
  '157':{r:'bkk',s:['Yaowarat, Çin Mahallesi','Yaowarat, Chinatown'],d:['Neon tabelaların altında, yolun tam ortasında.','Under the neon signs, in the middle of the road.']},
  '158':{r:'np',s:TWS.sam,d:['Pembe kuleye boydan boya sarılan ejderha.','The dragon that coils the whole height of the pink tower.']},
  '159':{r:'np',s:TWS.sam,d:['Ejderha Tapınağı ve çevresindeki ova, havadan.','The Dragon Temple and the plain around it, from the air.']},
- '160':{r:'bali',d:['Şelalenin önünde, rüzgâra karşı.','Facing the waterfall, into the wind.']},
+ '160':{x:1,r:'bali',d:['Şelalenin önünde, rüzgâra karşı.','Facing the waterfall, into the wind.']},
  '161':{r:'bali',s:TWS.tir,d:['Kutsal kaynağın çeşmelerinde arınma sırası.','Waiting their turn at the spouts of the holy spring.']},
  '162':{r:'cm',s:TWS.lat,d:['Ormanın geri aldığı eski tapınağın basamaklarında.','On the steps of the old temple hall the forest is taking back.']},
  '163':{r:'cm',s:TWS.lat,d:['Naga korkuluklu merdiven ormanın içine iniyor.','The naga staircase leading down into the forest.']},
  '164':{r:'cm',s:TWS.lat,d:['Yağmurun ve yılların boyadığı kemerler.','Arches painted by the rain and the years.']},
  '165':{r:'bali',s:TWS.teg,d:['Pirinç teraslarında, yükünü taşıyan bir çiftçiyle.','On the rice terraces, beside a farmer carrying his load.']},
- '166':{r:'th',d:['Dalların kemeri altında bir şelale.','A waterfall under an arch of branches.']},
- '167':{r:'bali',d:['Şelalenin serpintisi içinde.','In the spray of the waterfall.']},
- '168':{r:'th',d:['Arkasına bakmadan, ormana doğru.','Off towards the forest, without a look back.']},
+ '166':{x:1,r:'th',d:['Dalların kemeri altında bir şelale.','A waterfall under an arch of branches.']},
+ '167':{x:1,r:'bali',d:['Şelalenin serpintisi içinde.','In the spray of the waterfall.']},
+ '168':{x:1,r:'th',d:['Arkasına bakmadan, ormana doğru.','Off towards the forest, without a look back.']},
  '169':{r:'kr',s:['Koh Pak Bia, Hong Adaları','Koh Pak Bia, Hong Islands'],d:['Gün batımında, iki adayı birbirine bağlayan kum şeridi.','At sunset, the strip of sand that joins the two islands.']},
  '170':{r:'pp',s:['Bambu Adası','Bamboo Island'],d:['Turkuaz sığlıkların ortasında bir ada; ufukta Phi Phi.','An island ringed by turquoise shallows, Phi Phi on the horizon.']},
  '171':{r:'bali',s:TWS.ubud,d:['Ormanın sakinlerinden biri, keyfi yerinde.','One of the forest’s residents, entirely at ease.']},
  '172':{r:'pp',s:TWS.maya,d:['Kireçtaşı duvarlarla çevrili koyda, bileğe kadar suda.','Ankle-deep in the bay walled in by limestone.']},
- '173':{r:'bali',d:['Kayaların üzerinde, suyun gürültüsünde.','On the rocks, in the roar of the water.']},
+ '173':{x:1,r:'bali',d:['Kayaların üzerinde, suyun gürültüsünde.','On the rocks, in the roar of the water.']},
  '174':{r:'pp',s:TWS.maya,d:['Kayalıkların ortasında sığ, berrak su.','Shallow, clear water inside the ring of cliffs.']},
  '175':{r:'bali',s:TWS.ubud,d:['Gelen geçeni süzen bir makak.','A macaque sizing up the passers-by.']},
  '176':{r:'bali',s:TWS.tir,d:['Altın yaldızlı köşkler, yosunlu taş sunaklar.','Gilded pavilions and mossy stone shrines.']},
  '177':{r:'bali',s:TWS.tir,d:['Oyma taş kapının basamaklarında.','On the steps of the carved stone gate.']},
- '178':{r:'th',d:['Bir fille baş başa.','A quiet moment with an elephant.']},
+ '178':{x:1,r:'th',d:['Bir fille baş başa.','A quiet moment with an elephant.']},
  '179':{r:'npn',s:['Kelingking Plajı','Kelingking Beach'],d:['T-Rex’e benzeyen burnun üstünde, merdivenlerde.','On the stairs above the headland shaped like a T-Rex.']},
  '180':{r:'kr',s:['Railay','Railay'],d:['Kireçtaşı kayalıkların arasında Railay kumsalı, havadan.','Railay beach between its limestone cliffs, from the air.']},
- '181':{r:'bkk',d:['Neon mavisi bir vitrinde, aynada iki yolcu.','Two travellers in a mirror, in a neon-blue shop window.']},
+ '181':{x:1,r:'bkk',d:['Neon mavisi bir vitrinde, aynada iki yolcu.','Two travellers in a mirror, in a neon-blue shop window.']},
  '182':{r:'bali',s:['Batur Dağı','Mount Batur'],d:['Volkanın eteğinde bir cip; arkada Batur Gölü.','A jeep on the slope of the volcano, Lake Batur behind.']},
- '183':{r:'th',d:['Kayan köyünde, el dokumalarının önünde.','In a Kayan village, in front of the hand-woven scarves.']}};
+ '183':{x:1,r:'th',d:['Kayan köyünde, el dokumalarının önünde.','In a Kayan village, in front of the hand-woven scarves.']}};
 /* what stands under a frame (and under it in the viewer), and the same in one sentence for whoever cannot see it */
 const twCap=p=>{const k=lang==='en'?1:0,c=TW[p.id],r=TWR[c.r].n[k],s=c.s&&c.s[k],d=c.d[k];
-  return {html:`<span class="tw-l"><b>${s||r}</b>${s?`<span>${r}</span>`:''}</span><span class="tw-d">${d}</span>`,alt:`${s?s+', ':''}${r.replace(' · ',', ')} — ${d}`};};
+  return {html:c.x?'':`<span class="tw-l"><b>${s||r}</b>${s?`<span>${r}</span>`:''}</span><span class="tw-d">${d}</span>`,alt:c.x?d:`${s?s+', ':''}${r.replace(' · ',', ')} — ${d}`};};
 const twG=$('#twG'),twNav=$('#twNav'),lbCap=$('#lbCap'),TWF=['all','th','id'];let twW=0,twSel='all',twList=[],twMem={k:'',at:null};
 const twIn=c=>c==='all'?all.travel:all.travel.filter(p=>TWR[TW[p.id].r].c===c);
 /* Which column each frame goes to. hs: the heights (frame, caption and the gap under it), g: the place each frame belongs to.
@@ -1431,7 +1431,7 @@ function buildTravel(anim){
   twList=twIn(twSel);LISTS.travel=twList;
   if(twNav.dataset.l!==lang){twNav.dataset.l=lang;twNav.innerHTML=TWF.map(k=>`<button type="button" data-tw="${k}">${k==='all'?t('fxAll'):t('c_'+k)} · ${two(twIn(k).length)}</button>`).join('');}
   $$('button',twNav).forEach(b=>b.setAttribute('aria-pressed',b.dataset.tw===twSel));
-  fill(twG,twList.map((p,i)=>{const c=twCap(p);return `<div class="tw-i ph" tabindex="0" role="button" data-list="travel" data-i="${i}" data-id="${p.id}" aria-label="${c.alt}"><span class="fr" data-cur="view" style="--ph:${p.bg};aspect-ratio:${p.w}/${p.h}"><img ${lz(src(p.id,'s'),sset(p))} sizes="(max-width:640px) 92vw, 33vw" alt="" decoding="async"></span><span class="tw-c">${c.html}</span></div>`;}).join(''));
+  fill(twG,twList.map((p,i)=>{const c=twCap(p);return `<div class="tw-i ph" tabindex="0" role="button" data-list="travel" data-i="${i}" data-id="${p.id}" aria-label="${c.alt}"><span class="fr" data-cur="view" style="--ph:${p.bg};aspect-ratio:${p.w}/${p.h}"><img ${lz(src(p.id,'s'),sset(p))} sizes="(max-width:640px) 92vw, 33vw" alt="" decoding="async"></span>${c.html?`<span class="tw-c">${c.html}</span>`:''}</div>`;}).join(''));
   twLay();
   if(anim&&G)gsap.fromTo($$('.tw-i',twG),{opacity:0,y:14},{opacity:1,y:0,duration:.8,ease:'power3.out',stagger:.03,clearProps:'opacity,transform'});
 }
@@ -1472,7 +1472,7 @@ const LISTS={};buildFx();
 function lbDraw(dir){
   const p=L.list[L.i],olds=$$('img',lbS),im=new Image(),c=p.c==='travel'?twCap(p):null;im.alt=c?c.alt:`${cn(p.c)} ${t('photo')} ${L.i+1}`;im.draggable=false;im.src=src(p.id,'l');lbS.appendChild(im);
   $('#lbT').textContent=cn(p.c);$('#lbC').textContent=`${two(L.i+1)} / ${two(L.list.length)}`;
-  lb.classList.toggle('cap',!!c);lbCap.innerHTML=c?c.html:'';capFit();if(c&&G)gsap.fromTo(lbCap,{opacity:0},{opacity:1,duration:.7,ease:'power2.out'});
+  lb.classList.toggle('cap',!!(c&&c.html));lbCap.innerHTML=c?c.html:'';capFit();if(c&&c.html&&G)gsap.fromTo(lbCap,{opacity:0},{opacity:1,duration:.7,ease:'power2.out'});
   if(G){gsap.fromTo(im,{opacity:0,x:dir*36,scale:dir?1:.97},{opacity:1,x:0,scale:1,duration:.95,ease:'expo.out'});olds.forEach(o=>{gsap.killTweensOf(o);gsap.to(o,{opacity:0,x:-dir*36,duration:.5,ease:'power2.in',onComplete:()=>o.remove()});});}
   else olds.forEach(o=>o.remove());
   const bs=$$('button',railIn);bs.forEach((b,j)=>b.classList.toggle('cur',j===L.i));
@@ -1626,7 +1626,7 @@ const norm=h=>{h=String(h||'').toLowerCase();if(own(ALIAS,h))h=ALIAS[h];return o
 let cur=null,busy=false,pending=null,navAt=0;
 const pos={}; /* where each page was left, so that going back returns to the same place */
 function setTitle(h){const v=ROUTE[h],b='İlke Can Övet';const m={commercial:'Commercial',travel:'Travel World',about:t('nAbout'),contact:t('nContact')};
-  document.title=v==='home'?b:`${v==='gallery'?cn(secBySlug(h).k):m[v]} — ${b}`;}
+  document.title=v==='home'?'İlke Can Övet — Kalkan Villa ve Düğün Fotoğrafçısı':`${v==='gallery'?cn(secBySlug(h).k):m[v]} — ${b}`;}
 function markNav(h){const v=ROUTE[h];$$('.nav .nl').forEach(n=>{n.classList.remove('here');n.removeAttribute('aria-current');});
   const k=v==='home'?'home':['commercial','gallery','travel'].includes(v)?'portfolio':h;const el=$(`.nav .nl[data-nav="${k}"]`);
   if(el){el.classList.add('here');el.setAttribute('aria-current',el.tagName==='A'?'page':'true');}
