@@ -1,0 +1,1033 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>Villa Lavaya — 3D Virtual Tour · İlke Can Övet</title>
+<meta name="description" content="Villa Lavaya, Kalkan — cinematic 3D virtual tour by İlke Can Övet. 6 bedrooms, 7 bathrooms, 650 m², 2 pools.">
+<link rel="canonical" href="https://ilkecanovet.com/tur/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1626">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="İlke Can Övet">
+<meta property="og:title" content="Villa Lavaya — 3D Virtual Tour">
+<meta property="og:description" content="Villa Lavaya, Kalkan — cinematic 3D virtual tour by İlke Can Övet. 6 bedrooms, 7 bathrooms, 650 m², 2 pools.">
+<meta property="og:url" content="https://ilkecanovet.com/tur/">
+<meta property="og:image" content="https://ilkecanovet.com/tur/img/hero2400.jpg">
+<meta name="twitter:card" content="summary_large_image">
+</head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<style>
+/* The drone photograph is the stage. It is drawn with depth, so pressing and dragging turns the building.
+   Choosing a level moves the camera only: the photograph is never brightened, dimmed or outlined.
+   A slim level index sits on the right; the chosen level's name sits low on the left, over the hedges.
+   Rooms open as untouched photographs. One dark navy look. */
+:root{
+  --navy:#0b1626; --glass:rgba(9,17,29,.76); --line:rgba(233,220,196,.18);
+  --ivory:#f6f1e7; --sand:#e4d5b8; --gold:#d4b47a; --muted:rgba(246,241,231,.72);
+  --f-display:"Cormorant Garamond",Georgia,"Times New Roman",serif; --f-caps:"Cinzel",Georgia,serif; --f-body:"Montserrat",system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--navy);color:var(--ivory);font-family:var(--f-body);font-size:14px;line-height:1.5;overflow:hidden;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+#app{position:fixed;inset:0;overflow:hidden;overflow:clip;background:var(--navy)}
+
+/* ---------- building ---------- */
+#heroBg{position:absolute;inset:0;z-index:0;overflow:hidden}
+#heroBg::before{content:"";position:absolute;inset:-60px;background:url(img/hero_lqip.jpg) center/cover;filter:blur(36px) brightness(.42);transform:scale(1.1)}
+#gl{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block;touch-action:none;cursor:grab}
+#fallback{position:absolute;left:0;top:0;z-index:1;max-width:none;transform-origin:0 0;touch-action:none;cursor:grab;-webkit-user-drag:none}
+#gl.drag,#fallback.drag{cursor:grabbing}
+#gl.point,#fallback.point{cursor:pointer}
+#pins{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.pin{position:absolute;left:0;top:0;padding:9px;pointer-events:none;opacity:0;transition:opacity .55s ease;will-change:transform}
+.pin.on{opacity:1;pointer-events:auto}
+.pin i{display:block;position:relative;width:13px;height:13px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 1.5px var(--ivory),0 0 0 4px rgba(11,22,38,.5),0 4px 14px rgba(0,0,0,.45);transition:transform .25s ease}
+.pin i::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(246,241,231,.75);animation:ring 2.8s cubic-bezier(.2,.6,.3,1) infinite}
+@keyframes ring{from{transform:scale(.5);opacity:.9}to{transform:scale(1.5);opacity:0}}
+.pin span{position:absolute;left:50%;bottom:calc(100% - 3px);transform:translateX(-50%);white-space:nowrap;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ivory);background:rgba(9,17,29,.8);border:1px solid var(--line);padding:5px 11px 4px;border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity .25s,background .25s,color .25s,border-color .25s}
+.pin.lft span{left:auto;right:50%;transform:translateX(16px)}
+.pin.rgt span{transform:translateX(-16px)}
+.pin.below span{bottom:auto;top:calc(100% - 3px)}
+.pin.nolab span{opacity:0}
+.pin.nolab:hover span,.pin.nolab:focus-visible span{opacity:1;z-index:1}
+.pin:hover,.pin:focus-visible{z-index:2}
+.pin:hover i,.pin:focus-visible i{transform:scale(1.18)}
+.pin:hover span,.pin:focus-visible span{background:var(--ivory);color:var(--navy);border-color:var(--ivory)}
+.pin.soon{pointer-events:none}
+.pin.soon i{background:rgba(11,22,38,.35);box-shadow:0 0 0 1.5px var(--ivory),0 4px 14px rgba(0,0,0,.45)}
+.pin.soon i::after{display:none}
+.pin.soon span{color:var(--sand)}
+
+/* ---------- room photographs ---------- */
+#stage{position:absolute;inset:0;z-index:4;pointer-events:none}
+#stage .shot{position:absolute;inset:0;opacity:0;overflow:hidden;background:var(--navy)}
+#stage .shot img{width:100%;height:100%;object-fit:cover;display:block;will-change:transform;backface-visibility:hidden;pointer-events:none;-webkit-user-drag:none}
+.room-mode #stage{pointer-events:auto;touch-action:pan-y}
+
+.scrim{position:absolute;inset:0;z-index:2;pointer-events:none;transition:opacity .8s ease}
+.scrim.s-top{background:linear-gradient(180deg,rgba(4,9,17,.42) 0,rgba(4,9,17,0) 150px)}
+.scrim.s-cap{background:radial-gradient(60% 32% at 0% 100%,rgba(4,9,17,.78) 0,rgba(4,9,17,.52) 42%,rgba(4,9,17,.16) 74%,rgba(4,9,17,0) 100%),linear-gradient(0deg,rgba(4,9,17,.34) 0,rgba(4,9,17,0) 150px)}
+.scrim.s-room{z-index:5;opacity:0;background:radial-gradient(56% 44% at 0% 100%,rgba(4,9,17,.5) 0,rgba(4,9,17,.22) 55%,rgba(4,9,17,0) 100%),linear-gradient(0deg,rgba(4,9,17,.9) 0,rgba(4,9,17,.68) 120px,rgba(4,9,17,.34) 240px,rgba(4,9,17,0) 360px)}
+.room-mode .scrim.s-cap,.flying .scrim.s-cap,.intro .scrim.s-cap{opacity:0}
+.room-mode .scrim.s-room{opacity:1}
+
+.brand{position:absolute;z-index:7;top:max(22px,env(safe-area-inset-top,0px));left:max(28px,env(safe-area-inset-left,0px));transform-origin:0 0;transition:transform .7s var(--ease),opacity .9s ease}
+.brand img{display:block;height:116px;width:auto;filter:drop-shadow(0 3px 16px rgba(0,0,0,.55))}
+.room-mode .brand{transform:scale(.76)}
+.intro .brand{opacity:0}
+
+/* ---------- level index ---------- */
+.rail{position:absolute;z-index:7;right:max(30px,env(safe-area-inset-right,0px));top:56%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;width:62px;padding:15px 0 9px;border-radius:31px;background:rgba(9,17,29,.5);border:1px solid rgba(233,220,196,.17);backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);box-shadow:0 14px 40px rgba(0,0,0,.28);transition:opacity .7s ease .15s,transform .7s var(--ease) .15s}
+.rail .lbl{font-family:var(--f-caps);font-size:8.5px;letter-spacing:.38em;margin:0 -.38em 5px 0;color:var(--gold)}
+.rail ol{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column}
+.rail .ind{position:absolute;left:8px;top:0;margin-top:22px;width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(212,180,122,.85);opacity:0;transition:transform .8s var(--ease),opacity .5s}
+.lv{position:relative;display:flex;align-items:center;justify-content:center;width:62px;height:48px}
+.lv .n{font-family:var(--f-display);font-size:27px;line-height:1;color:rgba(246,241,231,.5);font-variant-numeric:lining-nums;transition:color .45s ease,transform .7s var(--ease)}
+.lv:hover .n,.lv.peek .n{color:var(--ivory)}
+.lv[aria-pressed="true"] .n{color:var(--ivory);transform:scale(1.36)}
+.lv .t{position:absolute;right:calc(100% + 14px);top:50%;transform:translate(8px,-50%);opacity:0;white-space:nowrap;pointer-events:none;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;background:var(--glass);border:1px solid var(--line);padding:6px 12px 5px;border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity .25s,transform .3s}
+.lv:hover .t,.lv:focus-visible .t{opacity:1;transform:translate(0,-50%)}
+.intro .rail,.flying .rail,.room-mode .rail{opacity:0;pointer-events:none;transform:translateY(-50%) translateX(14px);transition-delay:0s}
+
+/* ---------- level caption ---------- */
+.cap{position:absolute;z-index:7;left:max(40px,env(safe-area-inset-left,0px));bottom:max(34px,env(safe-area-inset-bottom,0px));max-width:calc(100vw - 260px);display:flex;align-items:flex-end;gap:30px;text-shadow:0 2px 16px rgba(0,0,0,.6);transition:opacity .7s ease .2s}
+.cap .lead{flex:none}
+.cap .k{font-family:var(--f-caps);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+.cap h2{margin:6px 0 0;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:clamp(40px,3.7vw,56px);line-height:1;letter-spacing:.004em;white-space:nowrap}
+.cap .aside{min-width:0;padding:2px 0 3px 30px;border-left:1px solid rgba(246,241,231,.3)}
+.cap p{margin:0;font-size:13px;color:var(--muted);max-width:58ch;text-wrap:balance}
+.cap .k,.cap p,.cta{text-shadow:0 1px 3px rgba(0,0,0,.55),0 1px 14px rgba(0,0,0,.6)}
+.cta{margin-top:10px;display:inline-flex;align-items:center;gap:12px;font-family:var(--f-caps);font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;padding:0 0 6px;border-bottom:1px solid rgba(212,180,122,.75);white-space:nowrap;transition:color .3s,border-color .3s}
+.cta svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s var(--ease)}
+.cta:hover{color:var(--gold)}
+.cta:hover svg{transform:translateX(5px)}
+.cta[disabled]{cursor:default;color:var(--muted);border-color:rgba(246,241,231,.22);font-family:var(--f-display);font-style:italic;font-size:16px;letter-spacing:.01em;text-transform:none}
+.cta[disabled] svg{display:none}
+.ctas{display:flex;align-items:center;gap:28px;margin-top:10px}
+.ctas .cta{margin-top:0}
+.cta.alt,.cta.alt[hidden]{display:none!important}
+.snd-m{display:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--glass);place-items:center;margin-left:auto}
+.snd-m svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.facts{display:flex;flex-wrap:wrap;align-items:center;row-gap:4px;margin-top:9px;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);text-shadow:0 1px 3px rgba(0,0,0,.55),0 1px 14px rgba(0,0,0,.6)}
+.facts:empty{display:none}
+.facts span{white-space:nowrap}
+.facts span+span::before{content:"";display:inline-block;width:1px;height:10px;margin:0 12px 0 13px;background:rgba(212,180,122,.6);vertical-align:-1px}
+.cap .lead,.cap .aside>*,.cap .chips{transition:opacity .45s ease,transform .7s var(--ease),filter .45s ease}
+.cap .aside>p{transition-delay:.07s}.cap .facts{transition-delay:.1s}.cap .ctas{transition-delay:.14s}.cap .chips{transition-delay:.1s}
+.cap.out .lead,.cap.out .aside>*,.cap.out .chips{opacity:0;transform:translateY(8px);filter:blur(3px);transition-delay:0s}
+.chips{display:none;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:4px 13px 4px 4px;font-size:12.5px;font-weight:500;white-space:nowrap;text-shadow:none}
+.chip img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.intro .cap,.flying .cap,.room-mode .cap{opacity:0;pointer-events:none;transition-delay:0s}
+
+/* tag that follows the pointer over the building */
+.htag{position:absolute;z-index:8;left:0;top:0;pointer-events:none;display:flex;align-items:center;gap:12px;padding:5px 18px 5px 5px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transition:opacity .22s ease}
+.htag img{width:46px;height:46px;border-radius:50%;object-fit:cover;display:block}
+.htag.noimg{padding-left:18px}
+.htag.noimg img{display:none}
+.htag b{display:block;font-family:var(--f-caps);font-weight:400;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);line-height:1.2}
+.htag span{display:block;font-family:var(--f-display);font-style:italic;font-size:22px;line-height:1.1;white-space:nowrap}
+.hint{position:absolute;z-index:8;left:50%;top:max(34px,env(safe-area-inset-top,0px));transform:translateX(-50%);white-space:nowrap;pointer-events:none;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;background:var(--glass);border:1px solid var(--line);padding:9px 18px 8px;border-radius:999px;opacity:0;transition:opacity .9s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* ---------- room view ---------- */
+.ctl{position:absolute;z-index:7;top:max(22px,env(safe-area-inset-top,0px));right:max(22px,env(safe-area-inset-right,0px));display:flex;gap:8px;opacity:0;pointer-events:none;transition:opacity .6s}
+.ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);display:grid;place-items:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .25s}
+.ib svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ib:hover{border-color:var(--gold)}
+.ib.wide{width:auto;padding:0 18px;border-radius:999px;display:flex;gap:9px;font-family:var(--f-caps);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+.title{position:absolute;z-index:6;left:max(30px,env(safe-area-inset-left,0px));right:max(30px,env(safe-area-inset-right,0px));bottom:max(122px,calc(env(safe-area-inset-bottom,0px) + 122px));pointer-events:none}
+.title .k{font-family:var(--f-caps);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 14px rgba(0,0,0,.6)}
+.title h3{margin:6px 0 0;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:clamp(38px,4.4vw,60px);line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.35),0 2px 26px rgba(0,0,0,.55)}
+.title p{margin:8px 0 0;font-family:var(--f-caps);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 14px rgba(0,0,0,.6)}
+.title>*{opacity:0;transition:opacity .6s ease}
+.title.on>*{opacity:1}
+.room{position:absolute;z-index:7;left:0;right:0;bottom:0;padding:0 max(28px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(28px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity .6s}
+.room-mode .room{opacity:1;pointer-events:auto}
+#app:not(.intro):not(.flying) .ctl{opacity:1;pointer-events:auto}
+.ctl .ro{display:none!important}
+.room-mode .ctl .ro{display:grid!important}
+.room-mode .ctl .ro.wide{display:flex!important}
+.ib[hidden]{display:none!important}
+/* between levels the chosen level's name sits low on the left, over its own shade */
+.between .scrim.s-cap{opacity:1}
+
+/* ---------- gallery: every photograph, by level and room ---------- */
+.gal{position:absolute;inset:0;z-index:12;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:#070d17;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s linear .5s}
+.gal.open{opacity:1;visibility:visible;transition:opacity .5s ease}
+.gh{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:30px;padding:max(20px,env(safe-area-inset-top,0px)) max(36px,env(safe-area-inset-right,0px)) 16px max(36px,env(safe-area-inset-left,0px));background:rgba(7,13,23,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.gh .gt{flex:none}
+.gh .k,.gsec .k{font-family:var(--f-caps);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+.gh h2{margin:4px 0 0;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:36px;line-height:1}
+.gnav{flex:1;min-width:0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.gnav::-webkit-scrollbar{display:none}
+.gnav button{flex:none;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:9px 16px 8px;border:1px solid var(--line);border-radius:999px;transition:color .25s,border-color .25s}
+.gnav button:hover,.gnav button[aria-current="true"]{color:var(--ivory);border-color:rgba(212,180,122,.65)}
+.gbody{padding:6px max(36px,env(safe-area-inset-right,0px)) max(70px,env(safe-area-inset-bottom,0px)) max(36px,env(safe-area-inset-left,0px))}
+.gsec{padding-top:44px}
+.gsec h3{margin:6px 0 0;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:46px;line-height:1}
+.groom{margin-top:26px}
+.groom h4{margin:0 0 11px;display:flex;align-items:baseline;gap:12px;font-family:var(--f-caps);font-weight:400;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sand)}
+.groom h4 small{font-family:var(--f-body);font-size:11px;letter-spacing:.06em;color:rgba(246,241,231,.45)}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:10px}
+.gi{position:relative;display:block;width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:3px;background:#0f1c2f}
+.gi img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .6s ease;-webkit-user-drag:none}
+.gi img.ld{opacity:1}
+.gi::after{content:"";position:absolute;inset:0;border-radius:3px;border:1px solid rgba(246,241,231,.08);transition:border-color .3s,box-shadow .3s;pointer-events:none}
+.gi:hover::after,.gi:focus-visible::after{border-color:var(--gold);box-shadow:inset 0 0 0 1px rgba(212,180,122,.5)}
+.gi.cur::after{border-color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)}
+.gi:focus-visible{outline:none}
+.meta{display:flex;align-items:center;gap:14px}
+.prog{flex:1;height:1px;background:rgba(246,241,231,.22);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--gold)}
+.count{font-family:var(--f-caps);font-size:10.5px;letter-spacing:.2em;color:var(--sand);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+.bar{display:flex;align-items:center;gap:12px;min-width:0}
+.rooms{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;padding:2px}
+.rooms::-webkit-scrollbar{display:none}
+.rc{flex:none;display:flex;align-items:center;gap:9px;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:4px 15px 4px 4px;font-size:12.5px;font-weight:500;white-space:nowrap;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .25s,background .25s}
+.rc img{width:30px;height:30px;border-radius:50%;object-fit:cover}
+.rc:hover{border-color:rgba(212,180,122,.55)}
+.rc[aria-current="true"]{border-color:var(--gold);background:rgba(212,180,122,.2)}
+
+/* ---------- opening: the logo draws itself while the tour loads ---------- */
+#veil{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:radial-gradient(110% 85% at 50% 46%,#13243c 0,#0b1626 55%,#060d18 100%);transition:opacity 1.1s ease}
+#veil.out{opacity:0;pointer-events:none}
+.load{display:flex;flex-direction:column;align-items:center;transition:transform 1.6s var(--ease)}
+#veil.out .load{transform:scale(1.06)}
+#mark{width:min(240px,50vw);height:auto;overflow:visible;display:block}
+#mark path{fill-rule:evenodd}
+#mark .mono path{--len:24000;fill:var(--ivory);fill-opacity:0;stroke:var(--gold);stroke-width:14;stroke-linejoin:round;stroke-dasharray:var(--len) var(--len);stroke-dashoffset:var(--len);animation:draw 1.8s cubic-bezier(.55,.05,.25,1) forwards,fillin 1s ease forwards}
+#mark .mono .v{animation-delay:.1s,1.35s}
+#mark .mono .l{animation-delay:.35s,1.6s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillin{to{fill-opacity:1;stroke-opacity:0}}
+#mark .word path{fill:var(--ivory);opacity:0;transform:translateY(120px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(1.45s + var(--i) * 55ms)}
+@keyframes rise{to{opacity:1;transform:none}}
+#mark .rule{fill:var(--gold);opacity:0;transform-box:fill-box;transform-origin:50% 50%;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.7,.2,1);animation:show .6s ease .2s forwards}
+@keyframes show{to{opacity:1}}
+#mark .place path{fill:var(--sand);opacity:0;animation:show .8s ease forwards;animation-delay:calc(2.05s + var(--i) * 60ms)}
+#mark .sheen{transform:translateX(-900px);animation:sheen 2.6s cubic-bezier(.45,0,.25,1) 2.7s infinite}
+@keyframes sheen{0%{transform:translateX(-900px)}55%,100%{transform:translateX(3300px)}}
+.load .vt{margin-top:26px;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.52em;margin-right:-.52em;text-transform:uppercase;color:var(--gold);opacity:0;animation:show 1s ease 2.4s forwards}
+
+@media (max-width:760px),(orientation:portrait) and (max-width:1100px){
+  .brand{left:max(20px,env(safe-area-inset-left,0px))}
+  .brand img{height:72px}
+  .rail{top:max(30px,env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));transform:none;flex-direction:row;width:auto;height:46px;padding:0 4px;border-radius:23px}
+  .rail .lbl{display:none}
+  .rail ol{flex-direction:row}
+  .rail .ind{left:0;top:auto;bottom:6px;margin:0 0 0 19px}
+  .lv{width:42px;height:46px}
+  .lv .n{font-size:23px}
+  .lv[aria-pressed="true"] .n{transform:scale(1.25)}
+  .lv .t{display:none}
+  .intro .rail,.flying .rail,.room-mode .rail{transform:translateY(-8px)}
+  .cap{left:max(18px,env(safe-area-inset-left,0px));right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));max-width:none;flex-direction:column;align-items:flex-start;gap:0}
+  .cap h2{font-size:38px;white-space:normal}
+  .cap .aside{display:contents}
+  .cap p{order:1;margin-top:8px;font-size:13px}
+  .facts{order:2;font-size:9.5px;letter-spacing:.16em}
+  .facts span+span::before{margin:0 9px 0 10px}
+  .chips{display:flex;order:3;align-self:stretch;margin-top:14px}
+  .ctas{order:4;margin-top:16px;gap:24px}
+  .cta.alt:not([hidden]){display:inline-flex!important}
+  .snd-m{display:inline-grid}
+  .ctas{align-self:stretch}
+  #app:not(.room-mode) .ctl{opacity:0!important;pointer-events:none!important}
+  #bGal{width:44px;padding:0;justify-content:center}
+  #bGal span,#bFs{display:none!important}
+  .gh{gap:14px;padding:max(14px,env(safe-area-inset-top,0px)) 14px 12px 18px;flex-wrap:wrap}
+  .gh .gt{flex:1}
+  .gh h2{font-size:30px}
+  .gnav{order:3;flex:0 0 100%}
+  .gbody{padding:0 14px max(50px,env(safe-area-inset-bottom,0px))}
+  .gsec{padding-top:30px}
+  .gsec h3{font-size:36px}
+  .ggrid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .scrim.s-cap{background:linear-gradient(0deg,rgba(4,9,17,.78) 0,rgba(4,9,17,.4) 190px,rgba(4,9,17,0) 310px)}
+  .pin span{display:none}
+  .pin{padding:12px}
+  .hint{top:auto;bottom:270px}
+  .title{bottom:max(118px,calc(env(safe-area-inset-bottom,0px) + 118px))}
+  .title h3{font-size:36px}
+}
+/* short landscape screens (phones turned sideways) */
+@media (max-height:560px) and (min-width:761px){
+  .brand{top:max(14px,env(safe-area-inset-top,0px))}
+  .brand img{height:62px}
+  .rail{padding:10px 0 6px}
+  .rail .lbl{display:none}
+  .lv{height:40px}
+  .lv .n{font-size:22px}
+  .rail .ind{margin-top:18px}
+  .cap{bottom:max(16px,env(safe-area-inset-bottom,0px));gap:20px}
+  .cap h2{font-size:32px}
+  .cap .aside{padding-left:20px}
+  .cap p{display:none}
+  .facts{margin-top:2px}
+  .ctas{margin-top:8px}
+  .title{bottom:max(104px,calc(env(safe-area-inset-bottom,0px) + 104px))}
+  .title h3{font-size:32px}
+  .title p{display:none}
+  .hint{top:auto;bottom:90px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pin i::after{animation:none}
+  #mark .mono path{animation:none;fill-opacity:1;stroke-opacity:0}
+  #mark .word path,#mark .place path,#mark .rule,.load .vt{animation:none;opacity:1;transform:none}
+  #mark .sheen{animation:none;opacity:0}
+}
+</style>
+
+<div id="app" class="intro">
+  <div id="heroBg"></div>
+  <canvas id="gl" aria-label="Villa Lavaya at dusk. Drag to look around; select a level to see its rooms."></canvas>
+  <img id="fallback" alt="Villa Lavaya at dusk" hidden>
+  <div id="pins"></div>
+  <div id="stage"><div class="shot"><img alt="" draggable="false"></div><div class="shot"><img alt="" draggable="false"></div></div>
+  <div class="scrim s-top"></div><div class="scrim s-cap"></div><div class="scrim s-room"></div>
+
+  <div class="brand"><img src="logo.png" alt="Villa Lavaya, Kalkan"></div>
+
+  <nav class="rail" aria-label="Levels"><span class="lbl">LEVEL</span><ol id="levels"><span class="ind" id="ind"></span></ol></nav>
+
+  <section class="cap" id="cap" aria-live="polite">
+    <div class="lead"><div class="k" id="capK"></div><h2 id="capT"></h2></div>
+    <div class="aside">
+      <p id="capP"></p>
+      <div class="facts" id="facts"></div>
+      <div class="ctas">
+        <button class="cta" id="cta" type="button"><span id="ctaT"></span><svg viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
+        <button class="cta alt" id="ctaG" type="button"><span>Gallery</span></button>
+        <button class="snd-m" id="ctaS" type="button" aria-label="Turn music off" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div class="htag" id="htag"><img id="htImg" alt=""><div><b id="htK"></b><span id="htT"></span></div></div>
+  <div class="hint" id="hint"></div>
+
+  <div class="ctl">
+    <button class="ib ro" id="bPlay" type="button" aria-label="Pause slideshow"><svg viewBox="0 0 24 24" id="playIcon"><path d="M9 6v12M15 6v12"/></svg></button>
+    <button class="ib wide" id="bGal" type="button" aria-label="Gallery of all photographs"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg><span>Gallery</span></button>
+    <button class="ib" id="bSnd" type="button" aria-label="Turn music off" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+    <button class="ib" id="bFs" type="button" aria-label="Full screen" hidden><svg viewBox="0 0 24 24" id="fsIcon"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+    <button class="ib wide ro" id="bBack" type="button" aria-label="Back to levels"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Levels</button>
+  </div>
+  <div class="title" id="title"><div class="k" id="tK"></div><h3 id="tT"></h3><p id="tS"></p></div>
+  <section class="room" id="room" aria-label="Rooms on this level">
+    <div class="meta"><div class="prog"><i id="prog"></i></div><span class="count" id="count"></span></div>
+    <div class="bar">
+      <button class="ib" id="prev" type="button" aria-label="Previous photograph"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="rooms" id="rooms"></div>
+      <button class="ib" id="next" type="button" aria-label="Next photograph"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </section>
+
+  <section class="gal" id="gal" aria-label="Gallery" aria-hidden="true">
+    <header class="gh" id="gh">
+      <div class="gt"><div class="k">Villa Lavaya · Kalkan</div><h2>Gallery</h2></div>
+      <nav class="gnav" id="gnav" aria-label="Gallery sections"></nav>
+      <button class="ib" id="gx" type="button" aria-label="Close gallery"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </header>
+    <div class="gbody" id="gbody"></div>
+  </section>
+
+  <div id="veil" role="status" aria-label="Loading the Villa Lavaya virtual tour"><div class="load"><svg id="mark" viewBox="620 649 2860 2801" aria-hidden="true"><defs><linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><clipPath id="monoClip"><path d="M1377.33,2400.69C1376.32,2399.41 1373.17,2391.19 1370.33,2382.43C1367.48,2373.67 1364.42,2364.25 1363.52,2361.50C1362.63,2358.75 1361.26,2354.47 1360.49,2352.00C1357.85,2343.52 1347.85,2313.50 1346.49,2310.00C1345.75,2308.07 1343.92,2302.45 1342.43,2297.50C1340.94,2292.55 1338.42,2284.68 1336.82,2280.00C1329.31,2258.04 1320.91,2232.61 1320.06,2229.23C1319.54,2227.18 1316.67,2218.30 1313.67,2209.50C1310.68,2200.70 1306.34,2187.43 1304.02,2180.00C1299.72,2166.23 1292.88,2144.70 1290.50,2137.50C1289.78,2135.30 1287.98,2129.45 1286.51,2124.50C1285.04,2119.55 1283.24,2113.93 1282.52,2112.00C1281.80,2110.07 1279.09,2101.75 1276.51,2093.50C1273.93,2085.25 1270.06,2073.28 1267.91,2066.90C1265.76,2060.52 1264.00,2054.67 1264.00,2053.92C1264.00,2053.16 1263.13,2050.28 1262.06,2047.52C1261.00,2044.76 1257.57,2034.40 1254.46,2024.50C1246.08,1997.88 1241.09,1982.18 1239.05,1976.00C1238.05,1972.97 1236.01,1966.45 1234.52,1961.50C1233.02,1956.55 1230.03,1946.99 1227.86,1940.26C1221.87,1921.61 1216.75,1905.58 1209.44,1882.50C1191.86,1827.04 1188.66,1817.00 1186.48,1810.50C1185.18,1806.65 1182.24,1797.42 1179.94,1790.00C1177.64,1782.58 1174.31,1772.00 1172.54,1766.50C1169.58,1757.30 1167.56,1750.92 1155.77,1713.50C1153.52,1706.35 1150.85,1698.39 1149.84,1695.81C1148.83,1693.24 1148.00,1690.58 1148.00,1689.90C1148.00,1688.90 1136.03,1650.94 1130.52,1634.50C1129.79,1632.30 1127.98,1626.45 1126.51,1621.50C1125.04,1616.55 1123.24,1610.92 1122.52,1609.00C1121.32,1605.80 1117.67,1594.38 1108.30,1564.50C1106.41,1558.45 1103.81,1550.35 1102.54,1546.50C1101.26,1542.65 1098.32,1533.42 1096.00,1526.00C1091.82,1512.62 1087.38,1498.70 1080.54,1477.54C1078.59,1471.52 1077.00,1466.06 1077.00,1465.43C1077.00,1464.79 1076.13,1462.07 1075.07,1459.38C1074.01,1456.70 1071.95,1450.45 1070.49,1445.50C1069.03,1440.55 1067.25,1434.92 1066.53,1433.00C1065.82,1431.08 1063.34,1423.42 1061.02,1416.00C1056.72,1402.23 1054.61,1395.56 1048.66,1377.00C1046.81,1371.22 1044.05,1362.45 1042.53,1357.50C1041.01,1352.55 1039.19,1346.92 1038.48,1345.00C1037.76,1343.08 1035.30,1335.42 1033.01,1328.00C1028.97,1314.95 1021.26,1290.71 1018.54,1282.50C1017.81,1280.30 1015.09,1271.75 1012.50,1263.50C1004.41,1237.79 999.93,1223.65 998.53,1219.50C997.79,1217.30 995.95,1211.45 994.44,1206.50C992.93,1201.55 989.06,1189.40 985.85,1179.50C982.63,1169.60 980.00,1161.06 980.00,1160.52C980.00,1159.98 979.12,1157.28 978.04,1154.52C976.97,1151.76 974.22,1143.42 971.93,1136.00C969.64,1128.58 966.32,1118.00 964.55,1112.50C962.77,1107.00 959.17,1095.75 956.55,1087.50C943.22,1045.60 927.30,1002.52 914.34,973.22C913.05,970.32 912.00,967.72 912.00,967.45C912.00,966.63 900.13,941.28 893.76,928.50C870.24,881.30 843.53,842.44 819.20,820.03C807.17,808.95 800.09,803.81 788.90,798.03C777.24,792.00 775.68,790.51 780.11,789.63C784.19,788.81 1301.31,788.83 1306.25,789.64C1310.50,790.34 1311.06,791.60 1307.75,792.97C1289.48,800.49 1283.91,803.53 1274.87,810.85C1261.62,821.59 1251.07,839.64 1247.31,858.00C1244.36,872.42 1244.12,874.59 1244.06,887.89C1243.96,910.77 1248.65,935.51 1259.55,969.50C1261.31,975.00 1264.87,986.25 1267.46,994.50C1270.04,1002.75 1272.76,1011.30 1273.49,1013.50C1274.22,1015.70 1276.02,1021.55 1277.49,1026.50C1278.96,1031.45 1280.78,1037.08 1281.53,1039.00C1282.27,1040.92 1283.17,1043.62 1283.52,1045.00C1283.88,1046.38 1287.76,1058.75 1292.16,1072.50C1296.55,1086.25 1301.00,1100.20 1302.05,1103.50C1303.09,1106.80 1305.48,1114.22 1307.36,1120.00C1309.23,1125.78 1312.88,1137.25 1315.46,1145.50C1318.04,1153.75 1321.91,1165.90 1324.05,1172.50C1326.20,1179.10 1329.57,1189.67 1331.55,1196.00C1333.53,1202.33 1336.19,1210.65 1337.46,1214.50C1338.74,1218.35 1341.67,1227.58 1343.98,1235.00C1346.29,1242.42 1350.78,1256.60 1353.95,1266.50C1357.13,1276.40 1360.73,1287.88 1361.95,1292.00C1363.18,1296.12 1364.76,1301.08 1365.47,1303.00C1366.18,1304.92 1368.89,1313.25 1371.49,1321.50C1385.93,1367.33 1395.47,1397.36 1399.45,1409.50C1401.25,1415.00 1403.97,1423.55 1405.49,1428.50C1408.52,1438.37 1414.42,1456.92 1419.47,1472.50C1421.26,1478.00 1424.55,1488.35 1426.79,1495.50C1429.03,1502.65 1431.60,1510.75 1432.51,1513.50C1433.41,1516.25 1435.65,1523.45 1437.48,1529.50C1439.31,1535.55 1441.26,1541.62 1441.81,1543.00C1442.36,1544.38 1444.03,1549.55 1445.52,1554.50C1447.01,1559.45 1448.82,1565.08 1449.53,1567.00C1450.24,1568.92 1452.48,1575.90 1454.51,1582.50C1456.54,1589.10 1459.21,1597.65 1460.45,1601.50C1461.69,1605.35 1464.86,1615.25 1467.48,1623.50C1470.11,1631.75 1473.72,1643.00 1475.49,1648.50C1477.27,1654.00 1480.61,1664.58 1482.92,1672.00C1485.23,1679.42 1488.17,1688.65 1489.46,1692.50C1490.75,1696.35 1493.47,1704.90 1495.51,1711.50C1497.55,1718.10 1500.01,1725.97 1500.98,1729.00C1501.95,1732.03 1504.87,1741.25 1507.47,1749.50C1510.07,1757.75 1513.94,1769.90 1516.07,1776.50C1524.72,1803.28 1526.83,1809.89 1529.49,1818.50C1535.63,1838.42 1538.58,1846.36 1540.20,1847.37C1541.14,1847.95 1542.20,1848.13 1542.57,1847.77C1542.93,1847.40 1544.73,1842.02 1546.56,1835.80C1548.39,1829.59 1550.35,1823.15 1550.91,1821.50C1551.47,1819.85 1553.11,1814.45 1554.55,1809.50C1556.00,1804.55 1557.79,1798.70 1558.53,1796.50C1559.26,1794.30 1561.07,1788.45 1562.54,1783.50C1564.02,1778.55 1566.06,1771.80 1567.09,1768.50C1568.73,1763.25 1579.10,1729.03 1586.65,1704.00C1588.06,1699.33 1589.81,1693.70 1590.54,1691.50C1591.27,1689.30 1593.07,1683.45 1594.54,1678.50C1596.01,1673.55 1597.80,1667.70 1598.52,1665.50C1599.24,1663.30 1600.81,1658.12 1602.01,1654.00C1604.26,1646.23 1606.95,1637.49 1610.00,1628.00C1610.97,1624.97 1612.91,1618.67 1614.32,1614.00C1615.73,1609.33 1618.50,1600.10 1620.49,1593.50C1622.48,1586.90 1625.25,1577.67 1626.66,1573.00C1628.06,1568.33 1629.81,1562.70 1630.54,1560.50C1631.27,1558.30 1633.06,1552.45 1634.53,1547.50C1635.99,1542.55 1637.59,1537.38 1638.08,1536.00C1638.57,1534.62 1640.12,1529.45 1641.53,1524.50C1642.93,1519.55 1645.91,1509.65 1648.13,1502.50C1650.36,1495.35 1653.07,1486.58 1654.15,1483.00C1655.23,1479.42 1656.94,1473.80 1657.96,1470.50C1665.25,1446.78 1668.11,1437.37 1670.44,1429.50C1671.91,1424.55 1674.61,1415.78 1676.43,1410.00C1678.26,1404.22 1680.98,1395.45 1682.46,1390.50C1683.95,1385.55 1685.79,1379.47 1686.55,1377.00C1688.09,1372.02 1690.47,1364.08 1694.50,1350.50C1695.97,1345.55 1697.76,1339.92 1698.48,1338.00C1699.20,1336.08 1701.01,1330.22 1702.49,1325.00C1703.98,1319.78 1705.77,1313.70 1706.47,1311.50C1707.16,1309.30 1708.68,1304.35 1709.84,1300.50C1711.00,1296.65 1713.76,1287.65 1715.98,1280.50C1723.48,1256.26 1724.93,1251.52 1730.51,1233.00C1738.51,1206.46 1741.03,1198.24 1743.10,1191.88C1744.11,1188.79 1746.12,1182.27 1747.58,1177.38C1749.04,1172.50 1751.25,1165.12 1752.50,1161.00C1753.75,1156.88 1755.96,1149.45 1757.42,1144.50C1758.89,1139.55 1761.83,1129.88 1763.97,1123.00C1766.11,1116.12 1769.06,1106.45 1770.54,1101.50C1772.01,1096.55 1773.81,1090.70 1774.53,1088.50C1775.25,1086.30 1776.83,1081.12 1778.03,1077.00C1779.24,1072.88 1781.03,1067.03 1782.01,1064.00C1782.99,1060.97 1784.95,1054.67 1786.35,1050.00C1793.26,1027.10 1798.94,1008.44 1807.82,979.50C1810.01,972.35 1813.02,962.45 1814.51,957.50C1816.00,952.55 1817.80,946.70 1818.53,944.50C1819.25,942.30 1820.97,936.67 1822.36,932.00C1827.24,915.57 1833.14,896.39 1836.80,885.00C1840.49,873.52 1840.50,873.47 1840.48,856.00C1840.46,838.53 1840.45,838.49 1837.13,830.23C1831.00,814.97 1821.50,804.89 1807.00,798.28C1791.61,791.26 1790.95,790.77 1795.25,789.64C1798.42,788.81 2290.40,789.01 2296.50,789.85L2301.50,790.53L2298.71,792.41C2297.18,793.44 2293.58,794.87 2290.71,795.60C2282.37,797.71 2274.22,800.82 2263.50,805.98C2236.14,819.16 2215.44,838.39 2201.95,863.17C2194.98,875.98 2191.89,884.35 2181.50,918.50C2180.00,923.45 2177.95,929.98 2176.95,933.00C2175.95,936.02 2173.49,943.90 2171.48,950.50C2169.48,957.10 2166.97,964.76 2165.92,967.52C2164.86,970.28 2164.00,973.09 2164.00,973.76C2164.00,974.43 2162.91,978.25 2161.58,982.24C2160.24,986.23 2156.62,997.60 2153.51,1007.50C2146.50,1029.87 2144.25,1037.01 2141.99,1044.00C2141.01,1047.03 2139.00,1053.55 2137.52,1058.50C2136.04,1063.45 2134.22,1069.08 2133.47,1071.00C2132.72,1072.92 2131.80,1076.07 2131.42,1078.00C2131.04,1079.92 2130.18,1082.84 2129.51,1084.50C2128.17,1087.78 2125.66,1095.56 2121.45,1109.50C2119.96,1114.45 2117.28,1123.00 2115.51,1128.50C2113.74,1134.00 2111.27,1141.88 2110.02,1146.00C2108.78,1150.12 2106.94,1155.97 2105.95,1159.00C2104.19,1164.35 2098.70,1181.75 2093.32,1199.00C2091.87,1203.67 2089.67,1210.65 2088.44,1214.50C2087.21,1218.35 2084.55,1226.90 2082.52,1233.50C2080.50,1240.10 2078.21,1246.98 2077.42,1248.78C2076.64,1250.59 2076.00,1252.72 2076.00,1253.53C2076.00,1254.33 2074.91,1258.25 2073.59,1262.24C2072.26,1266.23 2068.63,1277.60 2065.51,1287.50C2062.40,1297.40 2058.07,1311.12 2055.88,1318.00C2053.70,1324.88 2051.08,1333.20 2050.07,1336.50C2042.62,1360.69 2038.67,1372.96 2037.44,1375.78C2036.65,1377.59 2036.00,1379.79 2036.00,1380.66C2036.00,1382.21 2032.10,1394.95 2029.47,1402.00C2028.75,1403.92 2027.17,1408.88 2025.96,1413.00C2024.75,1417.12 2022.94,1422.97 2021.94,1426.00C2020.94,1429.03 2018.26,1437.58 2015.98,1445.00C2010.98,1461.27 2008.35,1469.68 2005.95,1477.00C2003.38,1484.87 1992.70,1518.88 1989.46,1529.50C1987.96,1534.45 1984.39,1545.70 1981.55,1554.50C1978.70,1563.30 1975.35,1573.88 1974.11,1578.00C1972.86,1582.12 1970.07,1591.12 1967.91,1598.00C1965.74,1604.88 1962.79,1614.33 1961.35,1619.00C1959.91,1623.67 1957.94,1629.97 1956.97,1633.00C1952.92,1645.68 1947.80,1661.93 1945.95,1668.00C1944.87,1671.58 1942.46,1679.22 1940.60,1685.00C1938.75,1690.78 1935.11,1702.25 1932.52,1710.50C1929.93,1718.75 1926.10,1730.90 1924.01,1737.50C1921.92,1744.10 1918.99,1753.55 1917.49,1758.50C1915.99,1763.45 1913.95,1769.97 1912.95,1773.00C1910.88,1779.30 1905.56,1796.32 1901.54,1809.50C1900.03,1814.45 1898.20,1820.08 1897.47,1822.00C1896.15,1825.46 1894.30,1831.38 1889.98,1846.00C1888.76,1850.12 1886.94,1855.97 1885.94,1859.00C1884.94,1862.03 1882.26,1870.58 1879.98,1878.00C1877.70,1885.42 1875.01,1893.97 1874.00,1897.00C1872.39,1901.79 1866.01,1922.12 1861.29,1937.50C1860.44,1940.25 1858.94,1944.75 1857.95,1947.50C1856.96,1950.25 1855.83,1954.07 1855.44,1956.00C1855.05,1957.92 1854.15,1960.84 1853.44,1962.50C1852.73,1964.15 1850.95,1969.55 1849.48,1974.50C1848.01,1979.45 1846.21,1985.30 1845.47,1987.50C1844.73,1989.70 1842.27,1997.58 1839.99,2005.00C1837.72,2012.42 1835.03,2020.97 1834.00,2024.00C1832.98,2027.03 1830.94,2033.55 1829.46,2038.50C1827.99,2043.45 1826.20,2049.30 1825.48,2051.50C1824.76,2053.70 1822.29,2061.57 1819.99,2069.00C1817.68,2076.43 1815.13,2084.30 1814.31,2086.50C1813.50,2088.70 1812.24,2092.75 1811.52,2095.50C1810.79,2098.25 1809.71,2101.85 1809.12,2103.50C1808.52,2105.15 1805.29,2115.28 1801.95,2126.00C1795.02,2148.24 1792.51,2156.20 1789.99,2164.00C1789.01,2167.03 1787.00,2173.55 1785.53,2178.50C1784.06,2183.45 1782.27,2188.85 1781.56,2190.50C1780.85,2192.16 1779.94,2195.08 1779.54,2197.00C1779.14,2198.93 1777.32,2205.00 1775.50,2210.50C1773.69,2216.00 1770.97,2224.55 1769.46,2229.50C1767.95,2234.45 1764.35,2245.93 1761.46,2255.00C1758.56,2264.07 1754.99,2275.55 1753.51,2280.50C1752.04,2285.45 1750.23,2291.07 1749.50,2293.00C1748.76,2294.93 1747.17,2299.88 1745.96,2304.00C1744.75,2308.12 1742.94,2313.97 1741.95,2317.00C1740.95,2320.03 1738.05,2329.25 1735.49,2337.50C1732.93,2345.75 1730.23,2354.30 1729.49,2356.50C1728.74,2358.70 1726.92,2364.55 1725.43,2369.50C1720.91,2384.57 1716.17,2398.09 1714.53,2400.59L1712.98,2402.96L1546.07,2402.99L1379.16,2403.02L1377.33,2400.69Z M1711.62,2317.88C1722.67,2313.08 1723.69,2311.37 1731.96,2284.00C1737.33,2266.24 1740.95,2254.42 1742.53,2249.50C1743.79,2245.59 1745.45,2240.19 1750.06,2225.00C1752.59,2216.65 1758.86,2196.49 1762.49,2185.00C1763.79,2180.88 1766.49,2172.10 1768.48,2165.50C1770.47,2158.90 1774.13,2146.97 1776.61,2139.00C1779.10,2131.03 1782.94,2118.65 1785.15,2111.50C1787.36,2104.35 1789.75,2096.70 1790.47,2094.50C1791.20,2092.30 1793.00,2086.45 1794.48,2081.50C1795.96,2076.55 1798.65,2067.78 1800.45,2062.00C1802.26,2056.22 1804.98,2047.45 1806.49,2042.50C1808.01,2037.55 1809.83,2031.70 1810.53,2029.50C1812.09,2024.65 1814.88,2015.56 1818.52,2003.50C1820.02,1998.55 1822.05,1992.03 1823.05,1989.00C1824.04,1985.97 1826.50,1978.10 1828.50,1971.50C1830.50,1964.90 1832.99,1956.80 1834.03,1953.50C1835.07,1950.20 1837.12,1943.45 1838.57,1938.50C1840.02,1933.55 1841.83,1927.70 1842.59,1925.50C1843.90,1921.68 1852.15,1894.70 1853.29,1890.50C1853.59,1889.40 1855.70,1882.65 1857.98,1875.50C1860.27,1868.35 1864.37,1855.08 1867.10,1846.00C1871.67,1830.80 1879.36,1806.09 1882.51,1796.50C1884.04,1791.81 1886.74,1783.06 1890.51,1770.50C1892.00,1765.55 1893.81,1759.70 1894.54,1757.50C1895.28,1755.30 1897.73,1747.42 1899.99,1740.00C1902.26,1732.58 1904.94,1723.80 1905.96,1720.50C1906.98,1717.20 1909.02,1710.45 1910.51,1705.50C1912.00,1700.55 1913.80,1694.70 1914.52,1692.50C1915.25,1690.30 1917.71,1682.42 1920.01,1675.00C1922.30,1667.58 1925.02,1658.80 1926.05,1655.50C1927.08,1652.20 1929.76,1643.42 1932.02,1636.00C1934.27,1628.58 1936.95,1620.03 1937.98,1617.00C1939.01,1613.97 1941.00,1607.67 1942.39,1603.00C1949.89,1577.85 1952.28,1569.99 1953.94,1565.00C1954.94,1561.97 1956.99,1555.45 1958.48,1550.50C1959.97,1545.55 1961.78,1539.70 1962.50,1537.50C1963.22,1535.30 1965.65,1527.42 1967.90,1520.00C1970.15,1512.58 1972.69,1504.47 1973.55,1502.00C1974.42,1499.53 1975.74,1495.25 1976.50,1492.50C1978.16,1486.44 1981.47,1475.61 1982.90,1471.50C1983.48,1469.85 1985.14,1464.45 1986.58,1459.50C1988.03,1454.55 1989.81,1448.70 1990.54,1446.50C1991.93,1442.28 1998.35,1421.61 2004.50,1401.50C2008.03,1389.98 2013.30,1372.94 2020.60,1349.50C2022.48,1343.45 2026.07,1331.75 2028.58,1323.50C2031.08,1315.25 2034.63,1303.78 2036.47,1298.00C2038.31,1292.22 2041.03,1283.45 2042.52,1278.50C2049.70,1254.58 2053.28,1243.22 2054.58,1240.22C2055.36,1238.41 2056.00,1236.27 2056.00,1235.47C2056.00,1234.67 2056.85,1231.42 2057.89,1228.25C2060.35,1220.72 2063.18,1211.60 2066.49,1200.50C2067.96,1195.55 2069.77,1189.92 2070.51,1188.00C2071.25,1186.08 2074.40,1175.95 2077.52,1165.50C2080.63,1155.05 2084.95,1140.88 2087.13,1134.00C2089.31,1127.12 2092.46,1117.00 2094.13,1111.50C2095.80,1106.00 2097.76,1099.70 2098.48,1097.50C2099.78,1093.51 2100.37,1091.58 2105.50,1074.50C2106.99,1069.55 2109.03,1063.03 2110.04,1060.00C2111.04,1056.97 2113.71,1048.42 2115.95,1041.00C2120.89,1024.70 2124.67,1012.40 2127.01,1005.00C2129.08,998.48 2130.47,993.97 2135.96,976.00C2141.37,958.30 2142.92,953.31 2148.35,936.00C2167.46,875.18 2167.02,877.17 2165.03,860.05C2163.10,843.42 2158.87,832.21 2150.62,821.84C2147.02,817.33 2144.45,815.35 2137.89,812.07L2129.67,807.95L2037.58,808.23L1945.50,808.50L1936.00,811.83C1923.86,816.09 1909.62,823.65 1901.59,830.08C1894.33,835.90 1885.61,846.15 1879.83,855.66C1876.29,861.48 1868.00,880.51 1868.00,882.81C1868.00,883.27 1866.24,889.24 1864.09,896.08C1861.95,902.91 1858.97,912.55 1857.49,917.50C1856.00,922.45 1854.19,928.30 1853.46,930.50C1852.73,932.70 1850.93,938.55 1849.46,943.50C1847.99,948.45 1846.19,954.30 1845.46,956.50C1844.73,958.70 1842.93,964.55 1841.46,969.50C1839.99,974.45 1838.19,980.30 1837.46,982.50C1836.73,984.70 1834.94,990.55 1833.49,995.50C1832.03,1000.45 1830.37,1005.62 1829.80,1007.00C1829.22,1008.38 1828.18,1011.75 1827.48,1014.50C1826.78,1017.25 1825.73,1020.85 1825.15,1022.50C1824.57,1024.15 1823.22,1028.42 1822.15,1032.00C1821.07,1035.58 1818.98,1042.55 1817.49,1047.50C1816.00,1052.45 1814.19,1058.30 1813.46,1060.50C1811.98,1064.92 1805.65,1085.53 1801.48,1099.50C1800.00,1104.45 1798.20,1110.30 1797.48,1112.50C1795.92,1117.31 1793.14,1126.34 1789.49,1138.50C1788.00,1143.45 1786.19,1149.30 1785.46,1151.50C1784.73,1153.70 1782.93,1159.55 1781.46,1164.50C1779.99,1169.45 1778.19,1175.30 1777.46,1177.50C1776.73,1179.70 1774.29,1187.58 1772.03,1195.00C1769.76,1202.42 1767.08,1211.20 1766.05,1214.50C1765.03,1217.80 1762.98,1224.55 1761.49,1229.50C1760.00,1234.45 1758.19,1240.30 1757.46,1242.50C1756.08,1246.69 1750.11,1266.13 1745.49,1281.50C1744.00,1286.45 1742.19,1292.30 1741.46,1294.50C1740.08,1298.69 1734.11,1318.13 1729.49,1333.50C1728.00,1338.45 1726.19,1344.30 1725.46,1346.50C1724.08,1350.69 1718.11,1370.13 1713.49,1385.50C1712.00,1390.45 1710.19,1396.30 1709.46,1398.50C1708.73,1400.70 1706.93,1406.55 1705.46,1411.50C1703.99,1416.45 1702.19,1422.30 1701.46,1424.50C1700.73,1426.70 1698.93,1432.55 1697.46,1437.50C1695.99,1442.45 1694.19,1448.30 1693.47,1450.50C1692.75,1452.70 1691.17,1457.88 1689.96,1462.00C1688.75,1466.12 1686.94,1471.97 1685.95,1475.00C1683.99,1480.95 1677.79,1501.07 1673.48,1515.50C1672.00,1520.45 1670.19,1526.30 1669.46,1528.50C1668.73,1530.70 1666.93,1536.55 1665.46,1541.50C1663.99,1546.45 1662.20,1552.30 1661.48,1554.50C1659.92,1559.31 1657.14,1568.34 1653.49,1580.50C1652.00,1585.45 1650.19,1591.30 1649.46,1593.50C1648.73,1595.70 1646.29,1603.58 1644.03,1611.00C1641.76,1618.42 1639.08,1627.20 1638.05,1630.50C1637.03,1633.80 1634.98,1640.55 1633.49,1645.50C1632.00,1650.45 1630.19,1656.30 1629.46,1658.50C1628.08,1662.69 1622.11,1682.13 1617.49,1697.50C1616.00,1702.45 1614.19,1708.30 1613.46,1710.50C1612.73,1712.70 1610.29,1720.58 1608.03,1728.00C1605.76,1735.42 1603.08,1744.20 1602.07,1747.50C1601.05,1750.80 1599.02,1757.55 1597.54,1762.50C1596.07,1767.45 1594.27,1773.30 1593.54,1775.50C1592.82,1777.70 1591.23,1782.88 1590.02,1787.00C1588.81,1791.12 1587.00,1796.97 1586.00,1800.00C1584.99,1803.03 1582.97,1809.55 1581.50,1814.50C1580.03,1819.45 1577.34,1828.22 1575.52,1834.00C1573.70,1839.78 1570.99,1848.55 1569.49,1853.50C1561.02,1881.59 1558.74,1888.82 1557.44,1891.78C1555.48,1896.25 1555.63,1901.77 1557.88,1908.16C1558.91,1911.10 1560.45,1915.75 1561.30,1918.50C1564.34,1928.34 1576.21,1965.60 1578.02,1971.00C1579.03,1974.03 1581.74,1982.58 1584.03,1990.00C1588.69,2005.08 1594.54,2023.46 1599.47,2038.50C1601.27,2044.00 1603.99,2052.55 1605.50,2057.50C1607.02,2062.45 1609.72,2071.00 1611.51,2076.50C1613.29,2082.00 1616.88,2093.25 1619.47,2101.50C1622.06,2109.75 1625.93,2121.90 1628.06,2128.50C1633.63,2145.79 1638.75,2162.11 1639.51,2165.00C1639.87,2166.38 1641.00,2169.75 1642.04,2172.50C1643.07,2175.25 1645.78,2183.57 1648.06,2191.00C1652.40,2205.13 1659.19,2226.67 1661.45,2233.50C1662.18,2235.70 1664.02,2241.55 1665.54,2246.50C1667.06,2251.45 1669.09,2257.75 1670.05,2260.50C1671.01,2263.25 1673.69,2271.57 1676.00,2279.00C1686.77,2313.51 1687.34,2314.44 1700.50,2318.60C1705.90,2320.31 1706.06,2320.30 1711.62,2317.88Z" clip-rule="evenodd"/><path d="M1882.22,2403.44C1879.27,2401.38 1879.41,2397.90 1882.55,2394.95C1884.86,2392.78 1886.28,2392.49 1897.30,2391.91C1904.01,2391.56 1910.25,2390.95 1911.18,2390.56C1912.10,2390.16 1915.47,2389.24 1918.68,2388.51C1946.80,2382.10 1973.18,2363.26 1989.43,2338.00C1997.82,2324.96 2001.83,2315.80 2005.95,2300.29C2011.74,2278.49 2011.38,2290.09 2011.97,2108.50L2012.51,1941.50L2016.16,1931.00C2018.16,1925.22 2021.91,1913.75 2024.48,1905.50C2027.06,1897.25 2029.77,1888.70 2030.51,1886.50C2031.26,1884.30 2033.08,1878.45 2034.55,1873.50C2036.03,1868.55 2038.06,1862.03 2039.06,1859.00C2040.06,1855.97 2042.49,1848.33 2044.47,1842.00C2046.45,1835.67 2049.13,1827.12 2050.44,1823.00C2051.74,1818.88 2054.70,1809.42 2057.01,1802.00C2059.32,1794.58 2062.67,1784.00 2064.46,1778.50C2066.24,1773.00 2068.71,1765.12 2069.94,1761.00C2071.17,1756.88 2073.00,1751.03 2073.99,1748.00C2074.99,1744.97 2076.70,1739.58 2077.79,1736.00C2078.88,1732.42 2082.54,1720.72 2085.93,1710.00C2089.31,1699.28 2093.23,1686.67 2094.64,1682.00C2096.05,1677.33 2097.77,1671.92 2098.46,1670.00C2099.16,1668.08 2100.69,1663.35 2101.86,1659.50C2107.31,1641.65 2109.31,1635.24 2110.47,1632.00C2111.15,1630.08 2112.73,1625.12 2113.96,1621.00C2115.20,1616.88 2117.03,1611.03 2118.04,1608.00C2119.04,1604.97 2121.05,1598.45 2122.51,1593.50C2123.97,1588.55 2125.76,1582.92 2126.49,1581.00C2127.22,1579.08 2129.62,1571.65 2131.82,1564.50C2138.16,1543.87 2143.74,1525.96 2150.18,1505.50C2153.47,1495.05 2157.98,1480.65 2160.19,1473.50C2162.41,1466.35 2164.88,1458.70 2165.70,1456.50C2166.52,1454.30 2167.99,1449.58 2168.98,1446.00C2169.97,1442.42 2172.46,1434.33 2174.51,1428.00C2176.56,1421.67 2179.05,1413.80 2180.03,1410.50C2181.02,1407.20 2185.02,1394.38 2188.93,1382.00C2192.84,1369.62 2196.89,1356.80 2197.93,1353.50C2198.96,1350.20 2201.67,1341.65 2203.94,1334.50C2206.21,1327.35 2208.91,1318.80 2209.94,1315.50C2210.97,1312.20 2213.67,1303.65 2215.93,1296.50C2218.20,1289.35 2221.01,1280.35 2222.18,1276.50C2223.35,1272.65 2225.33,1266.35 2226.59,1262.50C2229.76,1252.78 2236.29,1231.91 2243.96,1207.00C2246.24,1199.58 2248.93,1191.03 2249.94,1188.00C2250.94,1184.97 2253.01,1178.45 2254.54,1173.50C2256.06,1168.55 2258.55,1160.67 2260.06,1156.00C2264.92,1140.94 2280.31,1091.87 2287.98,1067.00C2290.26,1059.58 2292.96,1051.03 2293.97,1048.00C2294.98,1044.97 2296.70,1039.58 2297.80,1036.00C2299.96,1028.95 2311.22,993.30 2313.59,986.00C2314.39,983.52 2316.13,977.90 2317.45,973.50C2320.86,962.14 2321.86,959.80 2323.00,960.50C2323.67,960.91 2324.00,1197.81 2324.00,1670.62C2324.00,2157.79 2324.32,2380.74 2325.04,2382.07C2326.06,2383.97 2330.64,2384.00 2638.79,2384.01L2951.50,2384.01L2961.00,2381.93C2988.65,2375.88 3016.71,2367.41 3035.00,2359.59C3131.04,2318.54 3203.26,2249.99 3251.52,2154.09C3266.23,2124.88 3281.82,2085.09 3288.59,2059.50C3289.32,2056.75 3290.87,2051.12 3292.04,2047.00C3294.44,2038.58 3297.27,2026.95 3299.48,2016.50C3300.30,2012.65 3301.64,2006.35 3302.47,2002.50C3304.87,1991.41 3307.78,1975.00 3308.42,1969.00C3308.75,1965.97 3309.66,1959.45 3310.45,1954.50C3312.99,1938.55 3315.12,1917.03 3316.08,1897.53C3316.60,1887.06 3317.46,1873.25 3318.01,1866.83C3318.55,1860.41 3319.00,1846.41 3319.00,1835.71C3319.00,1817.28 3319.11,1816.13 3321.17,1813.51C3325.83,1807.59 3332.89,1807.04 3338.05,1812.20L3341.00,1815.15L3341.00,2108.88C3341.00,2335.99 3340.73,2402.87 3339.80,2403.80C3338.87,2404.73 3175.69,2405.00 2611.52,2405.00C1955.08,2405.00 1884.23,2404.85 1882.22,2403.44Z"/></clipPath></defs><g class="mono"><path class="v" d="M1377.33,2400.69C1376.32,2399.41 1373.17,2391.19 1370.33,2382.43C1367.48,2373.67 1364.42,2364.25 1363.52,2361.50C1362.63,2358.75 1361.26,2354.47 1360.49,2352.00C1357.85,2343.52 1347.85,2313.50 1346.49,2310.00C1345.75,2308.07 1343.92,2302.45 1342.43,2297.50C1340.94,2292.55 1338.42,2284.68 1336.82,2280.00C1329.31,2258.04 1320.91,2232.61 1320.06,2229.23C1319.54,2227.18 1316.67,2218.30 1313.67,2209.50C1310.68,2200.70 1306.34,2187.43 1304.02,2180.00C1299.72,2166.23 1292.88,2144.70 1290.50,2137.50C1289.78,2135.30 1287.98,2129.45 1286.51,2124.50C1285.04,2119.55 1283.24,2113.93 1282.52,2112.00C1281.80,2110.07 1279.09,2101.75 1276.51,2093.50C1273.93,2085.25 1270.06,2073.28 1267.91,2066.90C1265.76,2060.52 1264.00,2054.67 1264.00,2053.92C1264.00,2053.16 1263.13,2050.28 1262.06,2047.52C1261.00,2044.76 1257.57,2034.40 1254.46,2024.50C1246.08,1997.88 1241.09,1982.18 1239.05,1976.00C1238.05,1972.97 1236.01,1966.45 1234.52,1961.50C1233.02,1956.55 1230.03,1946.99 1227.86,1940.26C1221.87,1921.61 1216.75,1905.58 1209.44,1882.50C1191.86,1827.04 1188.66,1817.00 1186.48,1810.50C1185.18,1806.65 1182.24,1797.42 1179.94,1790.00C1177.64,1782.58 1174.31,1772.00 1172.54,1766.50C1169.58,1757.30 1167.56,1750.92 1155.77,1713.50C1153.52,1706.35 1150.85,1698.39 1149.84,1695.81C1148.83,1693.24 1148.00,1690.58 1148.00,1689.90C1148.00,1688.90 1136.03,1650.94 1130.52,1634.50C1129.79,1632.30 1127.98,1626.45 1126.51,1621.50C1125.04,1616.55 1123.24,1610.92 1122.52,1609.00C1121.32,1605.80 1117.67,1594.38 1108.30,1564.50C1106.41,1558.45 1103.81,1550.35 1102.54,1546.50C1101.26,1542.65 1098.32,1533.42 1096.00,1526.00C1091.82,1512.62 1087.38,1498.70 1080.54,1477.54C1078.59,1471.52 1077.00,1466.06 1077.00,1465.43C1077.00,1464.79 1076.13,1462.07 1075.07,1459.38C1074.01,1456.70 1071.95,1450.45 1070.49,1445.50C1069.03,1440.55 1067.25,1434.92 1066.53,1433.00C1065.82,1431.08 1063.34,1423.42 1061.02,1416.00C1056.72,1402.23 1054.61,1395.56 1048.66,1377.00C1046.81,1371.22 1044.05,1362.45 1042.53,1357.50C1041.01,1352.55 1039.19,1346.92 1038.48,1345.00C1037.76,1343.08 1035.30,1335.42 1033.01,1328.00C1028.97,1314.95 1021.26,1290.71 1018.54,1282.50C1017.81,1280.30 1015.09,1271.75 1012.50,1263.50C1004.41,1237.79 999.93,1223.65 998.53,1219.50C997.79,1217.30 995.95,1211.45 994.44,1206.50C992.93,1201.55 989.06,1189.40 985.85,1179.50C982.63,1169.60 980.00,1161.06 980.00,1160.52C980.00,1159.98 979.12,1157.28 978.04,1154.52C976.97,1151.76 974.22,1143.42 971.93,1136.00C969.64,1128.58 966.32,1118.00 964.55,1112.50C962.77,1107.00 959.17,1095.75 956.55,1087.50C943.22,1045.60 927.30,1002.52 914.34,973.22C913.05,970.32 912.00,967.72 912.00,967.45C912.00,966.63 900.13,941.28 893.76,928.50C870.24,881.30 843.53,842.44 819.20,820.03C807.17,808.95 800.09,803.81 788.90,798.03C777.24,792.00 775.68,790.51 780.11,789.63C784.19,788.81 1301.31,788.83 1306.25,789.64C1310.50,790.34 1311.06,791.60 1307.75,792.97C1289.48,800.49 1283.91,803.53 1274.87,810.85C1261.62,821.59 1251.07,839.64 1247.31,858.00C1244.36,872.42 1244.12,874.59 1244.06,887.89C1243.96,910.77 1248.65,935.51 1259.55,969.50C1261.31,975.00 1264.87,986.25 1267.46,994.50C1270.04,1002.75 1272.76,1011.30 1273.49,1013.50C1274.22,1015.70 1276.02,1021.55 1277.49,1026.50C1278.96,1031.45 1280.78,1037.08 1281.53,1039.00C1282.27,1040.92 1283.17,1043.62 1283.52,1045.00C1283.88,1046.38 1287.76,1058.75 1292.16,1072.50C1296.55,1086.25 1301.00,1100.20 1302.05,1103.50C1303.09,1106.80 1305.48,1114.22 1307.36,1120.00C1309.23,1125.78 1312.88,1137.25 1315.46,1145.50C1318.04,1153.75 1321.91,1165.90 1324.05,1172.50C1326.20,1179.10 1329.57,1189.67 1331.55,1196.00C1333.53,1202.33 1336.19,1210.65 1337.46,1214.50C1338.74,1218.35 1341.67,1227.58 1343.98,1235.00C1346.29,1242.42 1350.78,1256.60 1353.95,1266.50C1357.13,1276.40 1360.73,1287.88 1361.95,1292.00C1363.18,1296.12 1364.76,1301.08 1365.47,1303.00C1366.18,1304.92 1368.89,1313.25 1371.49,1321.50C1385.93,1367.33 1395.47,1397.36 1399.45,1409.50C1401.25,1415.00 1403.97,1423.55 1405.49,1428.50C1408.52,1438.37 1414.42,1456.92 1419.47,1472.50C1421.26,1478.00 1424.55,1488.35 1426.79,1495.50C1429.03,1502.65 1431.60,1510.75 1432.51,1513.50C1433.41,1516.25 1435.65,1523.45 1437.48,1529.50C1439.31,1535.55 1441.26,1541.62 1441.81,1543.00C1442.36,1544.38 1444.03,1549.55 1445.52,1554.50C1447.01,1559.45 1448.82,1565.08 1449.53,1567.00C1450.24,1568.92 1452.48,1575.90 1454.51,1582.50C1456.54,1589.10 1459.21,1597.65 1460.45,1601.50C1461.69,1605.35 1464.86,1615.25 1467.48,1623.50C1470.11,1631.75 1473.72,1643.00 1475.49,1648.50C1477.27,1654.00 1480.61,1664.58 1482.92,1672.00C1485.23,1679.42 1488.17,1688.65 1489.46,1692.50C1490.75,1696.35 1493.47,1704.90 1495.51,1711.50C1497.55,1718.10 1500.01,1725.97 1500.98,1729.00C1501.95,1732.03 1504.87,1741.25 1507.47,1749.50C1510.07,1757.75 1513.94,1769.90 1516.07,1776.50C1524.72,1803.28 1526.83,1809.89 1529.49,1818.50C1535.63,1838.42 1538.58,1846.36 1540.20,1847.37C1541.14,1847.95 1542.20,1848.13 1542.57,1847.77C1542.93,1847.40 1544.73,1842.02 1546.56,1835.80C1548.39,1829.59 1550.35,1823.15 1550.91,1821.50C1551.47,1819.85 1553.11,1814.45 1554.55,1809.50C1556.00,1804.55 1557.79,1798.70 1558.53,1796.50C1559.26,1794.30 1561.07,1788.45 1562.54,1783.50C1564.02,1778.55 1566.06,1771.80 1567.09,1768.50C1568.73,1763.25 1579.10,1729.03 1586.65,1704.00C1588.06,1699.33 1589.81,1693.70 1590.54,1691.50C1591.27,1689.30 1593.07,1683.45 1594.54,1678.50C1596.01,1673.55 1597.80,1667.70 1598.52,1665.50C1599.24,1663.30 1600.81,1658.12 1602.01,1654.00C1604.26,1646.23 1606.95,1637.49 1610.00,1628.00C1610.97,1624.97 1612.91,1618.67 1614.32,1614.00C1615.73,1609.33 1618.50,1600.10 1620.49,1593.50C1622.48,1586.90 1625.25,1577.67 1626.66,1573.00C1628.06,1568.33 1629.81,1562.70 1630.54,1560.50C1631.27,1558.30 1633.06,1552.45 1634.53,1547.50C1635.99,1542.55 1637.59,1537.38 1638.08,1536.00C1638.57,1534.62 1640.12,1529.45 1641.53,1524.50C1642.93,1519.55 1645.91,1509.65 1648.13,1502.50C1650.36,1495.35 1653.07,1486.58 1654.15,1483.00C1655.23,1479.42 1656.94,1473.80 1657.96,1470.50C1665.25,1446.78 1668.11,1437.37 1670.44,1429.50C1671.91,1424.55 1674.61,1415.78 1676.43,1410.00C1678.26,1404.22 1680.98,1395.45 1682.46,1390.50C1683.95,1385.55 1685.79,1379.47 1686.55,1377.00C1688.09,1372.02 1690.47,1364.08 1694.50,1350.50C1695.97,1345.55 1697.76,1339.92 1698.48,1338.00C1699.20,1336.08 1701.01,1330.22 1702.49,1325.00C1703.98,1319.78 1705.77,1313.70 1706.47,1311.50C1707.16,1309.30 1708.68,1304.35 1709.84,1300.50C1711.00,1296.65 1713.76,1287.65 1715.98,1280.50C1723.48,1256.26 1724.93,1251.52 1730.51,1233.00C1738.51,1206.46 1741.03,1198.24 1743.10,1191.88C1744.11,1188.79 1746.12,1182.27 1747.58,1177.38C1749.04,1172.50 1751.25,1165.12 1752.50,1161.00C1753.75,1156.88 1755.96,1149.45 1757.42,1144.50C1758.89,1139.55 1761.83,1129.88 1763.97,1123.00C1766.11,1116.12 1769.06,1106.45 1770.54,1101.50C1772.01,1096.55 1773.81,1090.70 1774.53,1088.50C1775.25,1086.30 1776.83,1081.12 1778.03,1077.00C1779.24,1072.88 1781.03,1067.03 1782.01,1064.00C1782.99,1060.97 1784.95,1054.67 1786.35,1050.00C1793.26,1027.10 1798.94,1008.44 1807.82,979.50C1810.01,972.35 1813.02,962.45 1814.51,957.50C1816.00,952.55 1817.80,946.70 1818.53,944.50C1819.25,942.30 1820.97,936.67 1822.36,932.00C1827.24,915.57 1833.14,896.39 1836.80,885.00C1840.49,873.52 1840.50,873.47 1840.48,856.00C1840.46,838.53 1840.45,838.49 1837.13,830.23C1831.00,814.97 1821.50,804.89 1807.00,798.28C1791.61,791.26 1790.95,790.77 1795.25,789.64C1798.42,788.81 2290.40,789.01 2296.50,789.85L2301.50,790.53L2298.71,792.41C2297.18,793.44 2293.58,794.87 2290.71,795.60C2282.37,797.71 2274.22,800.82 2263.50,805.98C2236.14,819.16 2215.44,838.39 2201.95,863.17C2194.98,875.98 2191.89,884.35 2181.50,918.50C2180.00,923.45 2177.95,929.98 2176.95,933.00C2175.95,936.02 2173.49,943.90 2171.48,950.50C2169.48,957.10 2166.97,964.76 2165.92,967.52C2164.86,970.28 2164.00,973.09 2164.00,973.76C2164.00,974.43 2162.91,978.25 2161.58,982.24C2160.24,986.23 2156.62,997.60 2153.51,1007.50C2146.50,1029.87 2144.25,1037.01 2141.99,1044.00C2141.01,1047.03 2139.00,1053.55 2137.52,1058.50C2136.04,1063.45 2134.22,1069.08 2133.47,1071.00C2132.72,1072.92 2131.80,1076.07 2131.42,1078.00C2131.04,1079.92 2130.18,1082.84 2129.51,1084.50C2128.17,1087.78 2125.66,1095.56 2121.45,1109.50C2119.96,1114.45 2117.28,1123.00 2115.51,1128.50C2113.74,1134.00 2111.27,1141.88 2110.02,1146.00C2108.78,1150.12 2106.94,1155.97 2105.95,1159.00C2104.19,1164.35 2098.70,1181.75 2093.32,1199.00C2091.87,1203.67 2089.67,1210.65 2088.44,1214.50C2087.21,1218.35 2084.55,1226.90 2082.52,1233.50C2080.50,1240.10 2078.21,1246.98 2077.42,1248.78C2076.64,1250.59 2076.00,1252.72 2076.00,1253.53C2076.00,1254.33 2074.91,1258.25 2073.59,1262.24C2072.26,1266.23 2068.63,1277.60 2065.51,1287.50C2062.40,1297.40 2058.07,1311.12 2055.88,1318.00C2053.70,1324.88 2051.08,1333.20 2050.07,1336.50C2042.62,1360.69 2038.67,1372.96 2037.44,1375.78C2036.65,1377.59 2036.00,1379.79 2036.00,1380.66C2036.00,1382.21 2032.10,1394.95 2029.47,1402.00C2028.75,1403.92 2027.17,1408.88 2025.96,1413.00C2024.75,1417.12 2022.94,1422.97 2021.94,1426.00C2020.94,1429.03 2018.26,1437.58 2015.98,1445.00C2010.98,1461.27 2008.35,1469.68 2005.95,1477.00C2003.38,1484.87 1992.70,1518.88 1989.46,1529.50C1987.96,1534.45 1984.39,1545.70 1981.55,1554.50C1978.70,1563.30 1975.35,1573.88 1974.11,1578.00C1972.86,1582.12 1970.07,1591.12 1967.91,1598.00C1965.74,1604.88 1962.79,1614.33 1961.35,1619.00C1959.91,1623.67 1957.94,1629.97 1956.97,1633.00C1952.92,1645.68 1947.80,1661.93 1945.95,1668.00C1944.87,1671.58 1942.46,1679.22 1940.60,1685.00C1938.75,1690.78 1935.11,1702.25 1932.52,1710.50C1929.93,1718.75 1926.10,1730.90 1924.01,1737.50C1921.92,1744.10 1918.99,1753.55 1917.49,1758.50C1915.99,1763.45 1913.95,1769.97 1912.95,1773.00C1910.88,1779.30 1905.56,1796.32 1901.54,1809.50C1900.03,1814.45 1898.20,1820.08 1897.47,1822.00C1896.15,1825.46 1894.30,1831.38 1889.98,1846.00C1888.76,1850.12 1886.94,1855.97 1885.94,1859.00C1884.94,1862.03 1882.26,1870.58 1879.98,1878.00C1877.70,1885.42 1875.01,1893.97 1874.00,1897.00C1872.39,1901.79 1866.01,1922.12 1861.29,1937.50C1860.44,1940.25 1858.94,1944.75 1857.95,1947.50C1856.96,1950.25 1855.83,1954.07 1855.44,1956.00C1855.05,1957.92 1854.15,1960.84 1853.44,1962.50C1852.73,1964.15 1850.95,1969.55 1849.48,1974.50C1848.01,1979.45 1846.21,1985.30 1845.47,1987.50C1844.73,1989.70 1842.27,1997.58 1839.99,2005.00C1837.72,2012.42 1835.03,2020.97 1834.00,2024.00C1832.98,2027.03 1830.94,2033.55 1829.46,2038.50C1827.99,2043.45 1826.20,2049.30 1825.48,2051.50C1824.76,2053.70 1822.29,2061.57 1819.99,2069.00C1817.68,2076.43 1815.13,2084.30 1814.31,2086.50C1813.50,2088.70 1812.24,2092.75 1811.52,2095.50C1810.79,2098.25 1809.71,2101.85 1809.12,2103.50C1808.52,2105.15 1805.29,2115.28 1801.95,2126.00C1795.02,2148.24 1792.51,2156.20 1789.99,2164.00C1789.01,2167.03 1787.00,2173.55 1785.53,2178.50C1784.06,2183.45 1782.27,2188.85 1781.56,2190.50C1780.85,2192.16 1779.94,2195.08 1779.54,2197.00C1779.14,2198.93 1777.32,2205.00 1775.50,2210.50C1773.69,2216.00 1770.97,2224.55 1769.46,2229.50C1767.95,2234.45 1764.35,2245.93 1761.46,2255.00C1758.56,2264.07 1754.99,2275.55 1753.51,2280.50C1752.04,2285.45 1750.23,2291.07 1749.50,2293.00C1748.76,2294.93 1747.17,2299.88 1745.96,2304.00C1744.75,2308.12 1742.94,2313.97 1741.95,2317.00C1740.95,2320.03 1738.05,2329.25 1735.49,2337.50C1732.93,2345.75 1730.23,2354.30 1729.49,2356.50C1728.74,2358.70 1726.92,2364.55 1725.43,2369.50C1720.91,2384.57 1716.17,2398.09 1714.53,2400.59L1712.98,2402.96L1546.07,2402.99L1379.16,2403.02L1377.33,2400.69Z M1711.62,2317.88C1722.67,2313.08 1723.69,2311.37 1731.96,2284.00C1737.33,2266.24 1740.95,2254.42 1742.53,2249.50C1743.79,2245.59 1745.45,2240.19 1750.06,2225.00C1752.59,2216.65 1758.86,2196.49 1762.49,2185.00C1763.79,2180.88 1766.49,2172.10 1768.48,2165.50C1770.47,2158.90 1774.13,2146.97 1776.61,2139.00C1779.10,2131.03 1782.94,2118.65 1785.15,2111.50C1787.36,2104.35 1789.75,2096.70 1790.47,2094.50C1791.20,2092.30 1793.00,2086.45 1794.48,2081.50C1795.96,2076.55 1798.65,2067.78 1800.45,2062.00C1802.26,2056.22 1804.98,2047.45 1806.49,2042.50C1808.01,2037.55 1809.83,2031.70 1810.53,2029.50C1812.09,2024.65 1814.88,2015.56 1818.52,2003.50C1820.02,1998.55 1822.05,1992.03 1823.05,1989.00C1824.04,1985.97 1826.50,1978.10 1828.50,1971.50C1830.50,1964.90 1832.99,1956.80 1834.03,1953.50C1835.07,1950.20 1837.12,1943.45 1838.57,1938.50C1840.02,1933.55 1841.83,1927.70 1842.59,1925.50C1843.90,1921.68 1852.15,1894.70 1853.29,1890.50C1853.59,1889.40 1855.70,1882.65 1857.98,1875.50C1860.27,1868.35 1864.37,1855.08 1867.10,1846.00C1871.67,1830.80 1879.36,1806.09 1882.51,1796.50C1884.04,1791.81 1886.74,1783.06 1890.51,1770.50C1892.00,1765.55 1893.81,1759.70 1894.54,1757.50C1895.28,1755.30 1897.73,1747.42 1899.99,1740.00C1902.26,1732.58 1904.94,1723.80 1905.96,1720.50C1906.98,1717.20 1909.02,1710.45 1910.51,1705.50C1912.00,1700.55 1913.80,1694.70 1914.52,1692.50C1915.25,1690.30 1917.71,1682.42 1920.01,1675.00C1922.30,1667.58 1925.02,1658.80 1926.05,1655.50C1927.08,1652.20 1929.76,1643.42 1932.02,1636.00C1934.27,1628.58 1936.95,1620.03 1937.98,1617.00C1939.01,1613.97 1941.00,1607.67 1942.39,1603.00C1949.89,1577.85 1952.28,1569.99 1953.94,1565.00C1954.94,1561.97 1956.99,1555.45 1958.48,1550.50C1959.97,1545.55 1961.78,1539.70 1962.50,1537.50C1963.22,1535.30 1965.65,1527.42 1967.90,1520.00C1970.15,1512.58 1972.69,1504.47 1973.55,1502.00C1974.42,1499.53 1975.74,1495.25 1976.50,1492.50C1978.16,1486.44 1981.47,1475.61 1982.90,1471.50C1983.48,1469.85 1985.14,1464.45 1986.58,1459.50C1988.03,1454.55 1989.81,1448.70 1990.54,1446.50C1991.93,1442.28 1998.35,1421.61 2004.50,1401.50C2008.03,1389.98 2013.30,1372.94 2020.60,1349.50C2022.48,1343.45 2026.07,1331.75 2028.58,1323.50C2031.08,1315.25 2034.63,1303.78 2036.47,1298.00C2038.31,1292.22 2041.03,1283.45 2042.52,1278.50C2049.70,1254.58 2053.28,1243.22 2054.58,1240.22C2055.36,1238.41 2056.00,1236.27 2056.00,1235.47C2056.00,1234.67 2056.85,1231.42 2057.89,1228.25C2060.35,1220.72 2063.18,1211.60 2066.49,1200.50C2067.96,1195.55 2069.77,1189.92 2070.51,1188.00C2071.25,1186.08 2074.40,1175.95 2077.52,1165.50C2080.63,1155.05 2084.95,1140.88 2087.13,1134.00C2089.31,1127.12 2092.46,1117.00 2094.13,1111.50C2095.80,1106.00 2097.76,1099.70 2098.48,1097.50C2099.78,1093.51 2100.37,1091.58 2105.50,1074.50C2106.99,1069.55 2109.03,1063.03 2110.04,1060.00C2111.04,1056.97 2113.71,1048.42 2115.95,1041.00C2120.89,1024.70 2124.67,1012.40 2127.01,1005.00C2129.08,998.48 2130.47,993.97 2135.96,976.00C2141.37,958.30 2142.92,953.31 2148.35,936.00C2167.46,875.18 2167.02,877.17 2165.03,860.05C2163.10,843.42 2158.87,832.21 2150.62,821.84C2147.02,817.33 2144.45,815.35 2137.89,812.07L2129.67,807.95L2037.58,808.23L1945.50,808.50L1936.00,811.83C1923.86,816.09 1909.62,823.65 1901.59,830.08C1894.33,835.90 1885.61,846.15 1879.83,855.66C1876.29,861.48 1868.00,880.51 1868.00,882.81C1868.00,883.27 1866.24,889.24 1864.09,896.08C1861.95,902.91 1858.97,912.55 1857.49,917.50C1856.00,922.45 1854.19,928.30 1853.46,930.50C1852.73,932.70 1850.93,938.55 1849.46,943.50C1847.99,948.45 1846.19,954.30 1845.46,956.50C1844.73,958.70 1842.93,964.55 1841.46,969.50C1839.99,974.45 1838.19,980.30 1837.46,982.50C1836.73,984.70 1834.94,990.55 1833.49,995.50C1832.03,1000.45 1830.37,1005.62 1829.80,1007.00C1829.22,1008.38 1828.18,1011.75 1827.48,1014.50C1826.78,1017.25 1825.73,1020.85 1825.15,1022.50C1824.57,1024.15 1823.22,1028.42 1822.15,1032.00C1821.07,1035.58 1818.98,1042.55 1817.49,1047.50C1816.00,1052.45 1814.19,1058.30 1813.46,1060.50C1811.98,1064.92 1805.65,1085.53 1801.48,1099.50C1800.00,1104.45 1798.20,1110.30 1797.48,1112.50C1795.92,1117.31 1793.14,1126.34 1789.49,1138.50C1788.00,1143.45 1786.19,1149.30 1785.46,1151.50C1784.73,1153.70 1782.93,1159.55 1781.46,1164.50C1779.99,1169.45 1778.19,1175.30 1777.46,1177.50C1776.73,1179.70 1774.29,1187.58 1772.03,1195.00C1769.76,1202.42 1767.08,1211.20 1766.05,1214.50C1765.03,1217.80 1762.98,1224.55 1761.49,1229.50C1760.00,1234.45 1758.19,1240.30 1757.46,1242.50C1756.08,1246.69 1750.11,1266.13 1745.49,1281.50C1744.00,1286.45 1742.19,1292.30 1741.46,1294.50C1740.08,1298.69 1734.11,1318.13 1729.49,1333.50C1728.00,1338.45 1726.19,1344.30 1725.46,1346.50C1724.08,1350.69 1718.11,1370.13 1713.49,1385.50C1712.00,1390.45 1710.19,1396.30 1709.46,1398.50C1708.73,1400.70 1706.93,1406.55 1705.46,1411.50C1703.99,1416.45 1702.19,1422.30 1701.46,1424.50C1700.73,1426.70 1698.93,1432.55 1697.46,1437.50C1695.99,1442.45 1694.19,1448.30 1693.47,1450.50C1692.75,1452.70 1691.17,1457.88 1689.96,1462.00C1688.75,1466.12 1686.94,1471.97 1685.95,1475.00C1683.99,1480.95 1677.79,1501.07 1673.48,1515.50C1672.00,1520.45 1670.19,1526.30 1669.46,1528.50C1668.73,1530.70 1666.93,1536.55 1665.46,1541.50C1663.99,1546.45 1662.20,1552.30 1661.48,1554.50C1659.92,1559.31 1657.14,1568.34 1653.49,1580.50C1652.00,1585.45 1650.19,1591.30 1649.46,1593.50C1648.73,1595.70 1646.29,1603.58 1644.03,1611.00C1641.76,1618.42 1639.08,1627.20 1638.05,1630.50C1637.03,1633.80 1634.98,1640.55 1633.49,1645.50C1632.00,1650.45 1630.19,1656.30 1629.46,1658.50C1628.08,1662.69 1622.11,1682.13 1617.49,1697.50C1616.00,1702.45 1614.19,1708.30 1613.46,1710.50C1612.73,1712.70 1610.29,1720.58 1608.03,1728.00C1605.76,1735.42 1603.08,1744.20 1602.07,1747.50C1601.05,1750.80 1599.02,1757.55 1597.54,1762.50C1596.07,1767.45 1594.27,1773.30 1593.54,1775.50C1592.82,1777.70 1591.23,1782.88 1590.02,1787.00C1588.81,1791.12 1587.00,1796.97 1586.00,1800.00C1584.99,1803.03 1582.97,1809.55 1581.50,1814.50C1580.03,1819.45 1577.34,1828.22 1575.52,1834.00C1573.70,1839.78 1570.99,1848.55 1569.49,1853.50C1561.02,1881.59 1558.74,1888.82 1557.44,1891.78C1555.48,1896.25 1555.63,1901.77 1557.88,1908.16C1558.91,1911.10 1560.45,1915.75 1561.30,1918.50C1564.34,1928.34 1576.21,1965.60 1578.02,1971.00C1579.03,1974.03 1581.74,1982.58 1584.03,1990.00C1588.69,2005.08 1594.54,2023.46 1599.47,2038.50C1601.27,2044.00 1603.99,2052.55 1605.50,2057.50C1607.02,2062.45 1609.72,2071.00 1611.51,2076.50C1613.29,2082.00 1616.88,2093.25 1619.47,2101.50C1622.06,2109.75 1625.93,2121.90 1628.06,2128.50C1633.63,2145.79 1638.75,2162.11 1639.51,2165.00C1639.87,2166.38 1641.00,2169.75 1642.04,2172.50C1643.07,2175.25 1645.78,2183.57 1648.06,2191.00C1652.40,2205.13 1659.19,2226.67 1661.45,2233.50C1662.18,2235.70 1664.02,2241.55 1665.54,2246.50C1667.06,2251.45 1669.09,2257.75 1670.05,2260.50C1671.01,2263.25 1673.69,2271.57 1676.00,2279.00C1686.77,2313.51 1687.34,2314.44 1700.50,2318.60C1705.90,2320.31 1706.06,2320.30 1711.62,2317.88Z"/><path class="l" d="M1882.22,2403.44C1879.27,2401.38 1879.41,2397.90 1882.55,2394.95C1884.86,2392.78 1886.28,2392.49 1897.30,2391.91C1904.01,2391.56 1910.25,2390.95 1911.18,2390.56C1912.10,2390.16 1915.47,2389.24 1918.68,2388.51C1946.80,2382.10 1973.18,2363.26 1989.43,2338.00C1997.82,2324.96 2001.83,2315.80 2005.95,2300.29C2011.74,2278.49 2011.38,2290.09 2011.97,2108.50L2012.51,1941.50L2016.16,1931.00C2018.16,1925.22 2021.91,1913.75 2024.48,1905.50C2027.06,1897.25 2029.77,1888.70 2030.51,1886.50C2031.26,1884.30 2033.08,1878.45 2034.55,1873.50C2036.03,1868.55 2038.06,1862.03 2039.06,1859.00C2040.06,1855.97 2042.49,1848.33 2044.47,1842.00C2046.45,1835.67 2049.13,1827.12 2050.44,1823.00C2051.74,1818.88 2054.70,1809.42 2057.01,1802.00C2059.32,1794.58 2062.67,1784.00 2064.46,1778.50C2066.24,1773.00 2068.71,1765.12 2069.94,1761.00C2071.17,1756.88 2073.00,1751.03 2073.99,1748.00C2074.99,1744.97 2076.70,1739.58 2077.79,1736.00C2078.88,1732.42 2082.54,1720.72 2085.93,1710.00C2089.31,1699.28 2093.23,1686.67 2094.64,1682.00C2096.05,1677.33 2097.77,1671.92 2098.46,1670.00C2099.16,1668.08 2100.69,1663.35 2101.86,1659.50C2107.31,1641.65 2109.31,1635.24 2110.47,1632.00C2111.15,1630.08 2112.73,1625.12 2113.96,1621.00C2115.20,1616.88 2117.03,1611.03 2118.04,1608.00C2119.04,1604.97 2121.05,1598.45 2122.51,1593.50C2123.97,1588.55 2125.76,1582.92 2126.49,1581.00C2127.22,1579.08 2129.62,1571.65 2131.82,1564.50C2138.16,1543.87 2143.74,1525.96 2150.18,1505.50C2153.47,1495.05 2157.98,1480.65 2160.19,1473.50C2162.41,1466.35 2164.88,1458.70 2165.70,1456.50C2166.52,1454.30 2167.99,1449.58 2168.98,1446.00C2169.97,1442.42 2172.46,1434.33 2174.51,1428.00C2176.56,1421.67 2179.05,1413.80 2180.03,1410.50C2181.02,1407.20 2185.02,1394.38 2188.93,1382.00C2192.84,1369.62 2196.89,1356.80 2197.93,1353.50C2198.96,1350.20 2201.67,1341.65 2203.94,1334.50C2206.21,1327.35 2208.91,1318.80 2209.94,1315.50C2210.97,1312.20 2213.67,1303.65 2215.93,1296.50C2218.20,1289.35 2221.01,1280.35 2222.18,1276.50C2223.35,1272.65 2225.33,1266.35 2226.59,1262.50C2229.76,1252.78 2236.29,1231.91 2243.96,1207.00C2246.24,1199.58 2248.93,1191.03 2249.94,1188.00C2250.94,1184.97 2253.01,1178.45 2254.54,1173.50C2256.06,1168.55 2258.55,1160.67 2260.06,1156.00C2264.92,1140.94 2280.31,1091.87 2287.98,1067.00C2290.26,1059.58 2292.96,1051.03 2293.97,1048.00C2294.98,1044.97 2296.70,1039.58 2297.80,1036.00C2299.96,1028.95 2311.22,993.30 2313.59,986.00C2314.39,983.52 2316.13,977.90 2317.45,973.50C2320.86,962.14 2321.86,959.80 2323.00,960.50C2323.67,960.91 2324.00,1197.81 2324.00,1670.62C2324.00,2157.79 2324.32,2380.74 2325.04,2382.07C2326.06,2383.97 2330.64,2384.00 2638.79,2384.01L2951.50,2384.01L2961.00,2381.93C2988.65,2375.88 3016.71,2367.41 3035.00,2359.59C3131.04,2318.54 3203.26,2249.99 3251.52,2154.09C3266.23,2124.88 3281.82,2085.09 3288.59,2059.50C3289.32,2056.75 3290.87,2051.12 3292.04,2047.00C3294.44,2038.58 3297.27,2026.95 3299.48,2016.50C3300.30,2012.65 3301.64,2006.35 3302.47,2002.50C3304.87,1991.41 3307.78,1975.00 3308.42,1969.00C3308.75,1965.97 3309.66,1959.45 3310.45,1954.50C3312.99,1938.55 3315.12,1917.03 3316.08,1897.53C3316.60,1887.06 3317.46,1873.25 3318.01,1866.83C3318.55,1860.41 3319.00,1846.41 3319.00,1835.71C3319.00,1817.28 3319.11,1816.13 3321.17,1813.51C3325.83,1807.59 3332.89,1807.04 3338.05,1812.20L3341.00,1815.15L3341.00,2108.88C3341.00,2335.99 3340.73,2402.87 3339.80,2403.80C3338.87,2404.73 3175.69,2405.00 2611.52,2405.00C1955.08,2405.00 1884.23,2404.85 1882.22,2403.44Z"/></g><g clip-path="url(#monoClip)"><rect class="sheen" x="200" y="700" width="700" height="1800" fill="url(#sheen)"/></g><g class="word"><path style="--i:0" d="M838.82,2778.25C838.01,2777.29 833.15,2767.05 828.02,2755.50C822.90,2743.95 817.26,2731.35 815.50,2727.50C813.73,2723.65 810.37,2716.22 808.02,2711.00C803.95,2701.91 801.68,2696.91 797.16,2687.00C796.03,2684.53 791.99,2675.53 788.18,2667.00C775.02,2637.59 767.73,2621.47 763.82,2613.12C757.71,2600.08 757.27,2600.50 777.39,2600.50L794.28,2600.50L797.39,2606.52C799.10,2609.84 801.13,2614.11 801.89,2616.02C802.66,2617.94 805.90,2625.35 809.09,2632.50C812.27,2639.65 821.01,2659.45 828.50,2676.50C835.99,2693.55 842.81,2708.03 843.66,2708.68C845.31,2709.95 848.00,2709.41 848.00,2707.82C848.00,2706.97 858.65,2681.80 862.53,2673.50C863.30,2671.85 865.98,2665.55 868.49,2659.50C871.00,2653.45 873.68,2647.15 874.45,2645.50C878.56,2636.68 892.00,2605.13 892.00,2604.29C892.00,2603.75 892.84,2602.55 893.86,2601.63C895.46,2600.18 897.86,2599.99 911.50,2600.22C930.33,2600.55 930.67,2600.75 926.76,2609.09C925.36,2612.07 922.09,2619.45 919.48,2625.50C916.88,2631.55 914.40,2636.95 913.97,2637.50C913.54,2638.05 911.61,2642.55 909.67,2647.50C907.74,2652.45 901.39,2667.23 895.58,2680.33C889.76,2693.44 885.00,2704.36 885.00,2704.59C885.00,2704.83 884.13,2706.93 883.06,2709.26C875.96,2724.82 855.00,2772.99 855.00,2773.77C855.00,2774.30 854.07,2775.92 852.93,2777.37C851.16,2779.62 850.09,2780.00 845.58,2780.00C841.79,2780.00 839.89,2779.51 838.82,2778.25Z"/><path style="--i:1" d="M1028.69,2778.22C1027.70,2778.00 1026.46,2776.72 1025.94,2775.35C1025.38,2773.87 1025.00,2738.76 1025.00,2688.01C1025.00,2612.19 1025.17,2602.98 1026.57,2601.57C1027.86,2600.28 1030.83,2600.00 1043.04,2600.00C1056.82,2600.00 1058.01,2600.15 1058.98,2601.96C1059.70,2603.31 1059.95,2631.24 1059.77,2690.05C1059.51,2772.68 1059.42,2776.22 1057.64,2777.52C1056.28,2778.52 1052.40,2778.84 1043.14,2778.74C1036.19,2778.66 1029.69,2778.43 1028.69,2778.22Z"/><path style="--i:2" d="M1177.20,2778.30C1175.93,2778.05 1174.48,2776.75 1173.97,2775.41C1173.42,2773.97 1173.13,2738.08 1173.27,2687.45C1173.47,2612.69 1173.69,2601.81 1175.00,2600.98C1175.83,2600.46 1183.12,2600.02 1191.21,2600.02C1204.73,2600.00 1206.01,2600.16 1206.96,2601.93C1207.64,2603.20 1207.98,2628.47 1207.95,2676.52C1207.93,2730.41 1208.22,2749.56 1209.08,2750.60C1210.05,2751.76 1217.24,2752.00 1251.05,2752.00C1287.72,2752.00 1292.03,2752.17 1293.52,2753.66C1294.89,2755.04 1295.12,2757.05 1294.84,2765.61C1294.62,2772.32 1294.05,2776.36 1293.20,2777.20C1292.17,2778.23 1280.29,2778.53 1235.70,2778.63C1204.79,2778.70 1178.46,2778.55 1177.20,2778.30Z"/><path style="--i:3" d="M1394.22,2777.44L1392.00,2775.89L1392.00,2689.14C1392.00,2623.01 1392.29,2602.11 1393.20,2601.20C1394.02,2600.38 1398.87,2600.00 1408.50,2600.00C1418.13,2600.00 1422.98,2600.38 1423.80,2601.20C1424.71,2602.11 1425.00,2619.68 1425.00,2674.15C1425.00,2725.06 1425.33,2746.62 1426.12,2748.37C1426.74,2749.72 1428.20,2751.09 1429.37,2751.40C1430.54,2751.72 1449.07,2751.98 1470.55,2751.99C1499.57,2752.00 1509.91,2752.31 1510.80,2753.20C1512.73,2755.13 1512.42,2775.44 1510.43,2777.43C1509.04,2778.82 1502.41,2779.00 1452.65,2779.00C1403.40,2779.00 1396.17,2778.81 1394.22,2777.44Z"/><path style="--i:4" d="M1578.13,2777.73C1576.38,2775.98 1576.68,2774.66 1581.59,2762.69C1584.11,2756.54 1586.98,2749.47 1587.97,2747.00C1588.95,2744.53 1591.19,2739.12 1592.93,2735.00C1595.64,2728.59 1602.79,2711.28 1611.52,2690.00C1620.50,2668.12 1625.30,2656.49 1628.05,2650.00C1631.19,2642.58 1636.49,2629.71 1639.99,2621.00C1640.98,2618.53 1642.96,2613.62 1644.39,2610.09C1648.61,2599.64 1647.82,2600.00 1666.48,2600.00C1681.98,2600.00 1682.74,2600.09 1684.70,2602.25C1685.82,2603.49 1695.16,2623.62 1705.44,2647.00C1715.73,2670.38 1726.15,2693.87 1728.61,2699.22C1731.06,2704.56 1733.75,2710.63 1734.59,2712.72C1735.42,2714.80 1736.74,2717.85 1737.52,2719.50C1738.31,2721.15 1741.48,2728.35 1744.58,2735.50C1747.68,2742.65 1752.89,2754.54 1756.15,2761.91C1759.42,2769.29 1761.88,2775.86 1761.63,2776.52C1760.92,2778.36 1755.89,2779.00 1742.07,2779.00C1733.50,2779.00 1728.83,2778.59 1727.67,2777.75C1726.73,2777.06 1722.65,2768.81 1718.59,2759.40C1709.17,2737.59 1708.36,2736.06 1705.70,2735.21C1704.49,2734.82 1686.85,2734.72 1666.50,2735.00L1629.50,2735.50L1626.83,2741.00C1625.37,2744.03 1623.23,2748.86 1622.08,2751.75C1613.40,2773.63 1611.83,2777.02 1609.90,2778.05C1607.40,2779.39 1579.51,2779.11 1578.13,2777.73Z M1678.78,2708.01C1691.59,2708.00 1694.16,2707.75 1694.65,2706.47C1694.98,2705.62 1693.86,2701.68 1692.17,2697.72C1690.49,2693.75 1687.03,2685.55 1684.49,2679.50C1678.72,2665.76 1672.50,2651.59 1670.23,2647.00C1666.83,2640.13 1665.61,2641.69 1656.59,2664.50C1642.52,2700.06 1640.76,2704.92 1641.34,2706.45C1641.76,2707.55 1644.12,2708.01 1650.70,2708.27C1655.54,2708.47 1660.40,2708.49 1661.50,2708.33C1662.60,2708.16 1670.38,2708.02 1678.78,2708.01Z"/><path style="--i:5" d="M2005.57,2777.43C2004.17,2776.02 2004.00,2766.64 2004.00,2689.13C2004.00,2623.01 2004.29,2602.11 2005.20,2601.20C2006.98,2599.42 2034.37,2599.53 2035.85,2601.32C2036.62,2602.25 2037.03,2624.59 2037.22,2675.90C2037.49,2747.10 2037.55,2749.20 2039.44,2750.58C2041.04,2751.75 2048.43,2752.00 2081.49,2752.00C2111.35,2752.00 2121.91,2752.31 2122.80,2753.20C2124.73,2755.13 2124.42,2775.44 2122.43,2777.43C2121.04,2778.82 2114.35,2779.00 2064.00,2779.00C2013.65,2779.00 2006.96,2778.82 2005.57,2777.43Z"/><path style="--i:6" d="M2190.25,2778.34C2188.04,2777.45 2188.89,2773.74 2194.08,2761.49C2196.87,2754.89 2199.52,2748.38 2199.98,2747.00C2200.43,2745.62 2202.03,2741.80 2203.54,2738.50C2205.05,2735.20 2207.29,2729.80 2208.52,2726.50C2209.75,2723.20 2214.23,2712.18 2218.48,2702.00C2222.72,2691.82 2228.59,2677.65 2231.53,2670.50C2234.46,2663.35 2239.85,2650.30 2243.52,2641.50C2247.18,2632.70 2250.99,2623.47 2251.99,2621.00C2252.98,2618.53 2254.96,2613.62 2256.39,2610.09C2260.61,2599.64 2259.82,2600.00 2278.48,2600.00C2297.46,2600.00 2296.56,2599.53 2302.26,2612.50C2304.19,2616.90 2309.93,2629.95 2315.01,2641.50C2320.09,2653.05 2326.91,2668.57 2330.17,2676.00C2333.43,2683.43 2336.72,2690.85 2337.49,2692.50C2341.14,2700.32 2370.50,2767.09 2372.21,2771.46C2375.10,2778.83 2374.26,2779.19 2355.23,2778.74C2338.15,2778.35 2338.70,2778.58 2335.24,2770.50C2324.38,2745.15 2320.61,2736.92 2319.40,2735.92C2317.50,2734.34 2243.19,2734.60 2241.27,2736.19C2239.87,2737.35 2236.00,2745.55 2235.99,2747.38C2235.99,2747.99 2235.29,2749.84 2234.43,2751.48C2232.73,2754.75 2228.59,2765.11 2227.48,2768.87C2226.21,2773.21 2222.96,2777.78 2220.71,2778.38C2218.06,2779.09 2192.03,2779.06 2190.25,2778.34Z M2306.81,2705.75C2306.99,2704.79 2305.76,2701.08 2304.07,2697.50C2302.38,2693.92 2301.00,2690.74 2301.00,2690.42C2301.00,2690.10 2298.15,2683.24 2294.66,2675.17C2291.17,2667.10 2286.84,2657.02 2285.03,2652.77C2280.08,2641.12 2277.68,2640.18 2274.56,2648.65C2272.48,2654.26 2264.68,2674.41 2262.03,2681.00C2261.03,2683.47 2258.96,2688.88 2257.42,2693.00C2255.89,2697.12 2254.27,2700.93 2253.82,2701.45C2252.83,2702.60 2252.74,2706.41 2253.68,2707.35C2254.06,2707.73 2266.09,2707.91 2280.42,2707.77C2304.31,2707.52 2306.50,2707.35 2306.81,2705.75Z"/><path style="--i:7" d="M2502.77,2778.25C2501.93,2777.29 2500.90,2775.38 2500.50,2774.00C2500.09,2772.62 2499.41,2771.05 2498.98,2770.50C2498.55,2769.95 2492.95,2757.63 2486.52,2743.13C2475.40,2718.01 2470.75,2707.69 2465.49,2696.50C2464.19,2693.75 2456.40,2676.43 2448.17,2658.00C2439.94,2639.57 2431.12,2620.02 2428.56,2614.54C2421.75,2599.92 2421.20,2600.56 2440.87,2600.22C2451.46,2600.05 2457.69,2600.33 2458.53,2601.02C2459.24,2601.61 2465.28,2614.56 2471.95,2629.80C2478.63,2645.03 2484.71,2658.85 2485.47,2660.50C2486.23,2662.15 2491.20,2673.40 2496.51,2685.50C2501.81,2697.60 2506.77,2708.14 2507.53,2708.91C2509.68,2711.13 2511.34,2709.03 2515.99,2698.20C2518.27,2692.86 2522.86,2682.20 2526.17,2674.50C2529.48,2666.80 2533.12,2658.25 2534.26,2655.50C2535.39,2652.75 2537.11,2648.70 2538.08,2646.50C2548.69,2622.29 2556.00,2605.07 2556.00,2604.28C2556.00,2603.75 2556.82,2602.57 2557.83,2601.65C2559.36,2600.27 2562.11,2600.00 2574.75,2600.00C2590.71,2600.00 2593.00,2600.34 2593.00,2602.67C2593.00,2603.48 2589.01,2613.22 2584.13,2624.32C2579.25,2635.42 2569.78,2657.10 2563.09,2672.50C2556.39,2687.90 2549.60,2703.43 2548.00,2707.00C2546.39,2710.57 2540.99,2722.95 2535.99,2734.50C2531.00,2746.05 2526.28,2756.85 2525.51,2758.50C2524.74,2760.15 2522.71,2764.87 2521.00,2768.98C2519.29,2773.09 2517.17,2777.26 2516.29,2778.23C2514.07,2780.69 2504.93,2780.70 2502.77,2778.25Z"/><path style="--i:8" d="M2657.49,2777.35C2656.59,2776.44 2656.07,2774.98 2656.35,2774.10C2657.08,2771.81 2673.96,2730.56 2685.24,2703.50C2690.51,2690.85 2696.19,2677.12 2697.85,2673.00C2699.51,2668.88 2703.87,2658.30 2707.53,2649.50C2711.19,2640.70 2716.80,2627.07 2720.00,2619.21C2728.65,2597.98 2725.93,2600.00 2745.87,2600.00C2765.36,2600.00 2764.03,2599.37 2768.91,2611.00C2770.65,2615.12 2772.69,2619.85 2773.45,2621.50C2774.21,2623.15 2780.01,2636.20 2786.32,2650.50C2792.64,2664.80 2806.56,2696.30 2817.25,2720.50C2841.97,2776.42 2841.69,2775.71 2840.17,2777.23C2838.38,2779.02 2811.29,2779.48 2808.03,2777.77C2805.60,2776.49 2802.93,2771.18 2792.57,2746.97C2790.41,2741.92 2788.01,2737.16 2787.25,2736.39C2785.24,2734.38 2709.81,2734.32 2708.14,2736.33C2707.54,2737.06 2705.93,2740.55 2704.57,2744.08C2695.39,2767.92 2691.42,2776.50 2689.00,2777.71C2687.36,2778.54 2681.79,2778.98 2672.82,2778.99C2661.43,2779.00 2658.87,2778.72 2657.49,2777.35Z M2773.79,2705.48C2774.03,2703.77 2767.79,2688.39 2751.71,2651.13C2749.96,2647.07 2747.93,2643.53 2747.19,2643.24C2744.53,2642.22 2744.07,2643.12 2734.53,2668.00C2727.84,2685.44 2723.87,2695.46 2721.79,2700.17C2718.20,2708.32 2717.37,2708.07 2747.23,2707.77C2772.71,2707.51 2773.51,2707.44 2773.79,2705.48Z"/><path style="--i:9" d="M2977.64,2777.50C2976.17,2776.03 2976.00,2771.46 2976.00,2733.68C2975.99,2686.38 2976.69,2691.12 2968.06,2679.95C2965.74,2676.95 2956.56,2664.82 2947.66,2653.00C2938.76,2641.18 2926.60,2625.08 2920.63,2617.24C2913.93,2608.42 2910.01,2602.41 2910.37,2601.49C2910.84,2600.24 2914.10,2600.00 2930.44,2600.00L2949.93,2600.00L2954.72,2606.42C2957.35,2609.95 2961.30,2615.39 2963.50,2618.51C2974.97,2634.77 2989.73,2654.43 2991.13,2655.31C2992.01,2655.87 2993.39,2656.06 2994.21,2655.75C2995.02,2655.44 3004.56,2643.04 3015.42,2628.19C3027.94,2611.06 3035.94,2600.98 3037.32,2600.61C3038.52,2600.29 3047.28,2600.02 3056.78,2600.01C3071.87,2600.00 3074.14,2600.21 3074.69,2601.64C3075.04,2602.54 3074.91,2603.83 3074.41,2604.52C3073.91,2605.21 3059.93,2623.77 3043.35,2645.77C3026.76,2667.77 3012.70,2686.70 3012.10,2687.82C3011.35,2689.21 3011.00,2703.45 3011.00,2732.24C3011.00,2767.23 3010.75,2774.96 3009.58,2776.56C3008.31,2778.30 3006.65,2778.53 2993.73,2778.82C2981.38,2779.10 2979.05,2778.90 2977.64,2777.50Z"/><path style="--i:10" d="M3140.38,2777.54C3138.84,2776.41 3138.83,2775.97 3140.28,2771.91C3142.69,2765.14 3151.35,2743.83 3161.97,2718.50C3164.28,2713.00 3168.55,2702.65 3171.47,2695.50C3180.89,2672.39 3189.05,2652.55 3189.96,2650.50C3190.88,2648.46 3192.93,2643.52 3199.53,2627.50C3201.57,2622.55 3204.54,2615.50 3206.12,2611.83C3207.70,2608.17 3209.00,2604.75 3209.00,2604.24C3209.00,2603.73 3209.82,2602.57 3210.83,2601.65C3212.38,2600.25 3215.22,2600.00 3229.31,2600.00C3245.47,2600.00 3246.00,2600.07 3247.41,2602.25C3248.69,2604.23 3262.62,2635.32 3285.16,2686.50C3289.04,2695.30 3293.24,2704.75 3294.50,2707.50C3295.77,2710.25 3298.83,2717.22 3301.31,2723.00C3303.79,2728.78 3309.73,2742.28 3314.51,2753.00C3324.70,2775.86 3324.89,2776.46 3322.21,2777.89C3320.11,2779.01 3291.91,2779.22 3290.28,2778.12C3288.85,2777.17 3285.56,2770.58 3280.45,2758.50C3273.65,2742.43 3270.87,2736.59 3269.62,2735.77C3269.00,2735.36 3251.61,2735.02 3230.97,2735.02C3198.61,2735.00 3193.14,2735.21 3191.22,2736.56C3190.00,2737.41 3189.00,2738.59 3189.00,2739.17C3189.00,2741.23 3174.87,2775.53 3173.41,2777.00C3171.45,2778.99 3143.00,2779.45 3140.38,2777.54Z M3256.83,2705.64C3257.03,2704.61 3255.38,2699.66 3253.16,2694.64C3250.95,2689.61 3247.33,2681.22 3245.13,2676.00C3242.93,2670.78 3238.91,2661.32 3236.20,2655.00C3229.10,2638.47 3228.41,2638.77 3219.43,2662.50C3216.93,2669.10 3213.38,2678.32 3211.53,2683.00C3202.83,2705.05 3202.82,2705.08 3204.07,2706.59C3205.07,2707.79 3209.55,2707.99 3230.87,2707.77C3254.94,2707.52 3256.50,2707.39 3256.83,2705.64Z"/></g><path class="rule" d="M1103.02,3001.98C1101.10,3001.53 1098.51,2999.97 1097.27,2998.52C1093.07,2993.64 1094.90,2983.73 1100.47,2981.19C1102.50,2980.27 1317.84,2980.00 2049.32,2980.00C2905.16,2980.00 2995.77,2980.15 2997.78,2981.56C3005.49,2986.96 3004.16,2997.95 2995.36,3001.62C2992.57,3002.79 2848.39,3002.98 2049.28,3002.90C1530.75,3002.84 1104.93,3002.43 1103.02,3001.98Z"/><g class="place"><path style="--i:0" d="M1681.20,3310.34C1679.93,3310.07 1678.46,3308.71 1677.94,3307.33C1676.85,3304.48 1676.77,3213.84 1677.85,3207.50L1678.53,3203.50L1684.35,3203.20C1687.78,3203.02 1690.75,3203.38 1691.58,3204.07C1692.71,3205.01 1693.00,3209.05 1693.00,3224.04C1693.00,3234.38 1693.27,3243.55 1693.61,3244.42C1695.26,3248.72 1698.65,3246.02 1717.90,3225.08C1728.48,3213.57 1737.82,3203.90 1738.65,3203.58C1739.48,3203.26 1743.29,3203.00 1747.11,3203.00C1752.27,3203.00 1754.21,3203.37 1754.62,3204.45C1754.98,3205.39 1747.65,3214.17 1734.09,3229.07C1722.49,3241.80 1713.00,3252.89 1713.00,3253.70C1713.00,3254.96 1747.29,3289.25 1761.25,3301.94C1766.11,3306.36 1767.22,3309.32 1764.42,3310.39C1761.91,3311.36 1752.39,3311.10 1749.47,3309.99C1748.01,3309.43 1736.27,3298.74 1723.39,3286.24C1710.52,3273.73 1698.83,3263.07 1697.43,3262.54C1695.49,3261.80 1694.66,3261.92 1693.96,3263.04C1693.45,3263.84 1693.02,3274.18 1693.00,3286.00C1692.98,3297.82 1692.59,3308.10 1692.13,3308.83C1691.22,3310.26 1684.93,3311.13 1681.20,3310.34Z"/><path style="--i:1" d="M1802.84,3310.33C1801.92,3310.08 1800.91,3309.20 1800.58,3308.36C1800.11,3307.11 1811.16,3280.13 1826.95,3244.00C1828.52,3240.43 1832.63,3230.75 1836.10,3222.50C1843.27,3205.41 1845.14,3202.25 1848.59,3201.39C1852.20,3200.48 1856.66,3202.75 1858.32,3206.34C1861.63,3213.49 1865.52,3222.18 1870.71,3234.00C1876.81,3247.91 1878.43,3251.56 1882.74,3261.00C1899.12,3296.88 1903.36,3307.21 1902.35,3308.82C1901.10,3310.82 1893.06,3311.64 1890.13,3310.07C1889.07,3309.50 1887.30,3307.11 1886.20,3304.77C1879.88,3291.29 1877.18,3285.25 1876.56,3283.25C1876.18,3282.01 1875.02,3280.54 1873.98,3279.99C1871.11,3278.46 1830.47,3278.36 1828.64,3279.89C1827.83,3280.55 1825.31,3285.47 1823.03,3290.80C1816.55,3305.96 1814.99,3308.93 1812.99,3310.00C1811.14,3311.00 1805.99,3311.16 1802.84,3310.33Z M1865.04,3262.45C1866.10,3261.17 1865.88,3259.94 1863.72,3255.20C1862.28,3252.07 1859.55,3245.94 1857.65,3241.60C1853.88,3233.00 1851.55,3229.65 1849.75,3230.25C1848.68,3230.61 1840.00,3249.42 1840.00,3251.39C1840.00,3251.88 1839.04,3254.21 1837.86,3256.56C1834.33,3263.64 1834.94,3264.00 1850.35,3264.00C1861.23,3264.00 1864.00,3263.71 1865.04,3262.45Z"/><path style="--i:2" d="M1965.20,3310.29C1963.91,3310.04 1962.47,3308.75 1961.95,3307.36C1960.67,3303.99 1960.69,3208.94 1961.98,3205.57C1962.85,3203.25 1963.48,3203.00 1968.28,3203.00C1971.20,3203.00 1974.14,3203.54 1974.80,3204.20C1975.70,3205.10 1976.00,3216.42 1976.00,3249.01C1976.00,3282.35 1976.29,3293.01 1977.25,3294.27C1978.34,3295.71 1981.44,3295.96 2000.83,3296.21C2021.48,3296.48 2023.27,3296.64 2024.56,3298.41C2025.33,3299.46 2025.74,3301.38 2025.48,3302.66C2025.22,3303.95 2024.78,3306.07 2024.51,3307.38C2024.23,3308.76 2023.08,3310.01 2021.76,3310.37C2019.23,3311.05 1968.79,3310.97 1965.20,3310.29Z"/><path style="--i:3" d="M2085.62,3309.48C2084.17,3308.03 2084.00,3302.51 2084.00,3256.63C2084.00,3218.12 2084.30,3205.10 2085.20,3204.20C2086.81,3202.59 2097.64,3202.63 2098.68,3204.25C2099.11,3204.94 2099.70,3214.72 2099.99,3225.99C2100.44,3243.94 2100.70,3246.52 2102.14,3246.79C2103.19,3246.99 2107.98,3242.41 2115.50,3234.00C2121.94,3226.79 2131.10,3216.87 2135.86,3211.94L2144.50,3202.99L2152.25,3202.99C2159.36,3203.00 2160.00,3203.17 2160.00,3205.03C2160.00,3206.26 2152.03,3215.78 2139.50,3229.51C2128.22,3241.87 2119.00,3252.73 2119.00,3253.66C2119.00,3254.59 2122.04,3258.30 2125.76,3261.92C2151.00,3286.47 2173.00,3308.41 2173.00,3309.03C2173.00,3310.97 2159.10,3311.78 2154.82,3310.09C2153.54,3309.58 2141.47,3298.34 2128.00,3285.11C2114.53,3271.88 2102.96,3261.04 2102.31,3261.03C2101.65,3261.01 2100.84,3261.45 2100.50,3262.00C2100.16,3262.54 2099.90,3272.56 2099.92,3284.25C2099.97,3309.74 2099.79,3310.36 2092.35,3310.80C2088.67,3311.01 2086.79,3310.64 2085.62,3309.48Z"/><path style="--i:4" d="M2207.25,3309.89C2206.56,3309.18 2206.00,3308.16 2206.00,3307.63C2206.00,3306.54 2212.15,3291.86 2224.48,3263.50C2229.03,3253.05 2234.66,3239.79 2236.99,3234.03C2239.32,3228.27 2242.08,3221.98 2243.12,3220.04C2244.15,3218.11 2245.00,3216.18 2245.00,3215.75C2245.00,3215.32 2246.20,3212.28 2247.66,3209.01C2249.81,3204.18 2250.93,3202.85 2253.56,3201.98C2259.52,3200.01 2261.69,3201.42 2265.66,3209.87C2278.88,3237.97 2308.00,3304.90 2308.00,3307.19C2308.00,3310.60 2305.20,3311.55 2298.86,3310.30C2293.95,3309.33 2293.64,3308.88 2286.04,3291.94C2283.71,3286.75 2281.11,3281.71 2280.25,3280.75C2278.85,3279.19 2276.40,3279.00 2257.00,3279.00C2237.57,3279.00 2235.16,3279.18 2233.83,3280.75C2232.42,3282.42 2230.75,3286.08 2224.46,3301.31C2222.92,3305.05 2220.82,3308.56 2219.80,3309.11C2216.60,3310.82 2208.63,3311.32 2207.25,3309.89Z M2271.66,3262.45C2271.99,3261.59 2271.53,3259.45 2270.63,3257.70C2269.74,3255.94 2266.80,3249.32 2264.09,3243.00C2259.91,3233.21 2258.82,3231.46 2256.75,3231.20C2254.58,3230.93 2253.96,3231.74 2251.04,3238.70C2249.24,3242.99 2246.39,3249.74 2244.72,3253.70C2240.44,3263.83 2240.65,3264.00 2257.65,3264.00C2268.86,3264.00 2271.16,3263.74 2271.66,3262.45Z"/><path style="--i:5" d="M2370.22,3309.44L2368.00,3307.89L2368.00,3256.64C2368.00,3218.12 2368.30,3205.10 2369.20,3204.20C2369.86,3203.54 2372.55,3203.00 2375.18,3203.00C2381.14,3203.00 2380.52,3202.43 2403.98,3229.50C2413.98,3241.05 2427.38,3256.46 2433.75,3263.75C2440.11,3271.05 2445.95,3277.91 2446.72,3279.00C2448.71,3281.85 2452.98,3281.68 2453.07,3278.75C2453.11,3277.51 2453.14,3261.37 2453.12,3242.88C2453.11,3224.39 2453.45,3207.97 2453.87,3206.38C2454.57,3203.72 2455.05,3203.48 2459.90,3203.19C2462.92,3203.02 2465.77,3203.39 2466.58,3204.07C2467.77,3205.06 2468.00,3213.47 2468.00,3256.55C2468.00,3314.49 2468.50,3311.00 2460.21,3311.00C2455.81,3311.00 2455.23,3310.66 2449.72,3304.87C2446.52,3301.50 2438.40,3292.37 2431.70,3284.58C2400.45,3248.27 2385.69,3232.00 2384.00,3232.00C2383.02,3232.00 2381.94,3232.71 2381.61,3233.58C2381.27,3234.45 2381.00,3251.79 2381.00,3272.11L2381.00,3309.05L2378.43,3310.02C2374.84,3311.39 2372.79,3311.24 2370.22,3309.44Z"/></g></svg><div class="vt">Virtual Tour</div></div></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const app=$('app'), cvs=$('gl'), fb=$('fallback'), pinsEl=$('pins');
+const compact=matchMedia('(max-width:760px),(orientation:portrait) and (max-width:1100px)');   // phones and upright tablets
+app.addEventListener('scroll',()=>{ if(app.scrollTop||app.scrollLeft){ app.scrollTop=0; app.scrollLeft=0; } });   // the stage never scrolls
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IW=1600, IH=900, H0=.47;
+const LAT=.027, LATY=.017, PAN={x:22,y:11}, KM=.07, KR=.07;
+const key=n=>typeof n==='number'?'p'+String(n).padStart(3,'0'):n;
+const wait=ms=>new Promise(r=>setTimeout(r,reduce?0:ms));
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)), lerp=(a,b,t)=>a+(b-a)*t;
+const sstep=(a,b,x)=>{ const t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
+const easeIO=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2, easeOut=k=>1-Math.pow(1-k,3);
+
+/* =================== CONTENT ===================
+   Positions are on the drone photograph at 1600 × 900. Each room's photographs open with the views. */
+const R={
+  terashavuz:{n:'Terrace Pool',s:'Glass-edged pool beneath the pergola',p:[146,79,80,81,62,117,73,59,147,61,63,74,75,76,77,58,60],at:[425,420]},
+  turkuaz:{n:'Pool Terrace Suite',s:'Opens onto the terrace pool, with a jacuzzi bath',p:[124,130,127,125,126,128,129,137,135,136],at:[650,370]},
+  ikiz:{n:'Twin Room',s:'Two beds and wide views over the bay',p:[71,7,8,11,9],at:[826,372]},
+  merdiven:{n:'Staircase & Gallery',s:'Glass balustrade and floating oak treads',p:[23,22,21,24,25,69,82],at:[1032,366]},
+  mor:{n:'Purple Suite',s:'Terrace suite with its own bathroom',p:[121,122,123,18,19,20,118],at:[1172,372]},
+
+  disyemek:{n:'Outdoor Dining & Bar',s:'Long table and a stone-wall bar',p:[64,83,84,85,52,53,49,51],at:[405,545]},
+  havuz:{n:'Infinity Pool',s:'Sun terrace above the sea',p:[66,87,86,145,65,89,94,91,95,92,54,55],at:[540,665]},
+  mutfak:{n:'Kitchen',s:'Island kitchen with a lounge corner',p:[46,47,48,39,40,41,115,116],at:[560,488]},
+  salon:{n:'Living Room',s:'Open-plan lounge with sea views',p:[45,44,99,114],at:[770,500]},
+  bilardo:{n:'Billiard Room',s:'Beside the glass staircase',p:[42,43],at:[905,462]},
+  yemek:{n:'Dining Room',s:'Opens onto the pool terrace',p:[100,101,102],at:[985,500]},
+  dissalon:{n:'Covered Lounge',s:'Shaded lounge with a timber wall',p:[56,93,98,97],at:[1100,540]},
+  yesil:{n:'Green Suite',s:'Opens onto the terrace, with sea views',p:[131,132,133,134],at:[1222,495]},
+  giris:{n:'Entrance & Table Tennis',s:'Stone courtyard beneath the palms',p:[142,90,143,144,141],at:[1372,330]},
+
+  bahceoda:{n:'Garden Bedroom',s:'Opens straight onto the garden',p:[105,106,107],at:[940,778]},
+  sinema:{n:'Cinema Room',s:'Large screen and a deep sofa',p:[108,138,110,109],at:[1065,778]},
+  spor:{n:'Gym',s:'Weights and cardio equipment',p:[103,104],at:[1240,778]},
+
+  jakuzi:{n:'Jacuzzi Terrace',s:'Rooftop hot tub above Kalkan bay',p:[139,140],at:[622,250]}
+};
+const LEVELS=[
+  {id:'roof',no:'2',name:'Roof',sub:'Jacuzzi terrace and roof suite',rooms:['jakuzi'],lead:'jakuzi',frame:[500,160,1300,340],maxS:1.6,
+   marks:[{n:'Roof Suite',at:[905,262]}],        // no photographs of the roof suite yet
+   polys:[[[512,222],[548,170],[696,170],[700,226],[806,186],[1132,186],[1136,236],[1256,240],[1282,292],[1280,328],[505,328]]]},
+  {id:'upper',no:'1',name:'Upper Floor',sub:'Suites and the terrace pool',rooms:['turkuaz','ikiz','merdiven','mor','terashavuz'],lead:'turkuaz',frame:[300,315,1310,535],maxS:1.45,
+   polys:[[[318,322],[505,328],[1280,328],[1300,345],[1300,484],[700,426],[572,420],[470,500],[462,528],[310,528],[316,440]]]},
+  {id:'ground',no:'0',name:'Ground Floor',sub:'Living spaces, the infinity pool and the entrance',rooms:['salon','bilardo','yemek','dissalon','yesil','giris','disyemek','havuz','mutfak'],lead:'salon',frame:[40,170,1460,760],maxS:1,
+   polys:[[[310,528],[462,528],[470,500],[572,420],[700,426],[1300,484],[1292,520],[1396,688],[1398,740],[835,748],[192,754],[42,746],[42,640],[198,560]],[[1300,200],[1340,165],[1458,165],[1462,470],[1300,470]]]},
+  {id:'garden',no:'−1',name:'Garden Level',sub:'Garden bedroom, cinema and gym',rooms:['bahceoda','sinema','spor'],lead:'bahceoda',frame:[830,735,1430,812],maxS:1.7,
+   polys:[[[838,750],[1398,742],[1426,760],[1424,806],[838,806]]]}
+];
+LEVELS.forEach((L,i)=>L.rooms.forEach(id=>{ R[id].li=i; }));
+// the villa from the air, before the levels: drone photographs from overhead down to the front
+R.hava={n:'From Above',s:'The villa at dusk above Kalkan Bay',p:[151,152,153,154],at:null,li:null};
+// the guided tour: the ground floor first, then the garden level, the upper floor, and the roof to finish.
+// each level starts with its lead room and follows the rooms in order; the slideshow runs through the whole villa
+const TOUR_LEVELS=[2,3,1,0];
+const rotate=(a,i)=>i>0?a.slice(i).concat(a.slice(0,i)):a.slice();
+const tourRooms=L=>rotate(L.rooms,Math.max(0,L.rooms.indexOf(L.lead)));
+const TOUR=[...(R.hava.p.length?['hava']:[]),...TOUR_LEVELS.flatMap(i=>tourRooms(LEVELS[i]))];
+const SEQ=TOUR.flatMap(id=>R[id].p.map((_,k)=>[id,k]));
+// from the villa's sale listing (Lale Homes)
+const FACTS={line:'Overlooking Kalkan Bay, Mouse Island and Snake Island.',items:['6 Bedrooms','7 Bathrooms','650 m²','2 Pools']};
+// photographs also come at 3600 px (AVIF) for screens that would otherwise enlarge the 2400 px copies
+const HDK=new Set([7,8,9,11,18,19,20,21,22,23,24,25,39,40,41,42,43,44,45,46,47,48,49,51,52,53,54,55,56,58,59,60,61,62,63,64,65,66,69,71,73,74,75,76,77,79,80,81,82,83,84,85,86,87,89,90,91,92,93,94,95,97,98,99,100,101,102,103,104,105,106,107,108,109,110,114,115,116,117,118,126,131,132,133,136,139,140,141,142,143,144,145,146,147,151,152,153,154]);
+let HD=false;
+const srcOf=(id,i)=>{ const n=R[id].p[i]; return HD&&HDK.has(n)?'hd/'+key(n)+'.avif':'img/'+key(n)+'.jpg'; };
+const thOf=id=>'th/'+key(R[id].p[0])+'.jpg';
+const galOf=(id,i)=>'g/'+key(R[id].p[i])+'.jpg';
+
+/* =================== IMAGES =================== */
+const cache={}, recent=[];
+function loadImg(src){
+  if(!cache[src]) cache[src]=new Promise(res=>{ const i=new Image(); i.decoding='async';
+    i.onload=()=>{ (i.decode?i.decode():Promise.resolve()).catch(()=>{}).then(()=>res(i)); };
+    i.onerror=()=>{ if(/^hd\//.test(src)){ HD=false; loadImg(src.replace(/^hd\/(\w+)\.avif$/,'img/$1.jpg')).then(res); } else res(i); };
+    i.src=src; });
+  // room photographs: keep only the last few in memory, so a long tour stays light on phones
+  if(/^(img|hd)\/p\d/.test(src)){ const k=recent.indexOf(src); if(k>=0) recent.splice(k,1); recent.push(src); while(recent.length>14) delete cache[recent.shift()]; }
+  return cache[src];
+}
+// the 3600 px set is used when the screen needs more than 2400 px and the browser shows AVIF
+function decideHD(){
+  const need=Math.max(screen.width,screen.height,innerWidth,innerHeight)*(window.devicePixelRatio||1);
+  const c=navigator.connection; if(need<2500||(c&&c.saveData)) return;
+  const t=new Image(); t.onload=()=>{ if(t.naturalWidth>0) HD=true; };
+  t.src='data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADrbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAETAAAAJgAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAgAAAAIAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBAAwAAAAAE2NvbHJuY2x4AAEADQAGgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAALm1kYXQSAAoIGAA2iAhoNCAyGBlHh4Yhh5555oAAAJBAyRuo2leT+zfowA=='; }
+const IMG={mid:null,big:null};
+const bestImg=()=>(IMG.big&&IMG.big.naturalWidth)?IMG.big:IMG.mid;
+
+/* =================== LAYOUT & CAMERA =================== */
+let VW=1,VH=1,DPR=1,MOBILE=false;
+const base={S:1};
+const cam={s:1,Tx:0,Ty:0};
+function layout(){
+  VW=Math.max(1,app.clientWidth); VH=Math.max(1,app.clientHeight);
+  DPR=Math.min(window.devicePixelRatio||1,3); MOBILE=compact.matches;
+  const cw=Math.round(VW*DPR), ch=Math.round(VH*DPR);
+  if(cvs.width!==cw||cvs.height!==ch){ cvs.width=cw; cvs.height=ch; }
+  const S=MOBILE?VW*1.36/IW:Math.max(VW/IW,VH/IH)*1.06;
+  base.S=Math.max(16,Math.round(IW*S*DPR/16)*16)/(IW*DPR);     // photograph width in whole device pixels
+  fb.style.width=IW*base.S+'px'; fb.style.height=IH*base.S+'px';
+}
+function snapS(s){ const W0=IW*base.S*DPR; return Math.max(16,Math.round(W0*s/16)*16)/W0; }
+function area(){ return MOBILE?{x:0,y:96,w:VW,h:Math.max(220,VH-96-290)}:{x:0,y:0,w:VW-140,h:VH-120}; }
+function clampT(v){ const S=base.S*v.s, w=IW*S, h=IH*S, px=PAN.x+2, py=PAN.y+2;
+  v.Tx=w-VW>=2*px?clamp(v.Tx,VW-w+px,-px):(VW-w)/2;
+  if(!MOBILE) v.Ty=h-VH>=2*py?clamp(v.Ty,VH-h+py,-py):(VH-h)/2;
+  return v; }
+function frameRect(r,maxS){ const a=area();
+  let s=Math.min(a.w*.92/((r[2]-r[0])*base.S),a.h*.84/((r[3]-r[1])*base.S));
+  s=clamp(s,1,maxS); if(s<1.15) s=1; s=snapS(s);
+  const S=base.S*s, v=clampT({s,Tx:a.x+a.w/2-(r[0]+r[2])/2*S,Ty:a.y+a.h/2-(r[1]+r[3])/2*S});
+  v.Tx=Math.round(v.Tx*DPR)/DPR; v.Ty=Math.round(v.Ty*DPR)/DPR; return v; }
+const homeView=()=>frameRect([300,150,1460,812],1);
+const levelView=i=>i===null?homeView():frameRect(LEVELS[i].frame,LEVELS[i].maxS);
+
+/* =================== DEPTH (pins, hit tests) =================== */
+let DEP=null, DW=0, DH=0;
+function readDepth(img){ try{ DW=800; DH=450; const c=document.createElement('canvas'); c.width=DW; c.height=DH;
+  const g=c.getContext('2d',{willReadFrequently:true}); g.drawImage(img,0,0,DW,DH); const d=g.getImageData(0,0,DW,DH).data;
+  DEP=new Uint8Array(DW*DH); for(let i=0;i<DW*DH;i++) DEP[i]=d[i*4]; }catch(e){ DEP=null; } }
+function depthAt(u,v){ if(!DEP) return H0; const x=clamp(u*DW-.5,0,DW-1.001), y=clamp(v*DH-.5,0,DH-1.001), i=x|0, j=y|0, fx=x-i, fy=y-j, k=j*DW+i;
+  return ((DEP[k]*(1-fx)+DEP[k+1]*fx)*(1-fy)+(DEP[k+DW]*(1-fx)+DEP[k+DW+1]*fx)*fy)/255; }
+const look={x:0,y:0}, lookV={x:0,y:0}, motion={x:0,y:0,r:0};
+const OFF={lx:0,ly:0,r:0,cx:.5,cy:.5,h0:H0};
+const edgeF=(sx,sy,u,v)=>sstep(0,.09,Math.min(sx,1-sx,sy,1-sy))*sstep(0,.03,Math.min(u,1-u,v,1-v));
+const effT=()=>[cam.Tx+look.x*PAN.x,cam.Ty+look.y*PAN.y];
+function project(px,py){ const S=base.S*cam.s, T=effT(), u=px/IW, v=py/IH, sx=T[0]+px*S, sy=T[1]+py*S;
+  const e=edgeF(sx/VW,sy/VH,u,v), h=depthAt(u,v)-OFF.h0;
+  return [sx+(OFF.lx+(u-OFF.cx)*OFF.r)*e*h*IW*S, sy+(OFF.ly+(v-OFF.cy)*OFF.r)*e*h*IH*S]; }
+function unproject(sx,sy){ const S=base.S*cam.s, T=effT(), u0=(sx-T[0])/(S*IW), v0=(sy-T[1])/(S*IH), e=edgeF(sx/VW,sy/VH,u0,v0);
+  let u=u0, v=v0; for(let k=0;k<3;k++){ const h=depthAt(u,v)-OFF.h0; u=u0-(OFF.lx+(u0-OFF.cx)*OFF.r)*e*h; v=v0-(OFF.ly+(v0-OFF.cy)*OFF.r)*e*h; }
+  return [u*IW,v*IH]; }
+
+/* =================== WEBGL =================== */
+let gl=null, GL2=false, prog=null, U={}, maxTex=4096, texDisp=null, texHi=null, texDep=null, texMask=null, maskReady=false;
+let dispW=0, dispS=0, dispReady=false, dispSrc=null, mix=1, hiSrc=null;
+const P3=(()=>{ try{ if(!matchMedia('(color-gamut: p3)').matches) return false; const g=document.createElement('canvas').getContext('2d',{colorSpace:'display-p3'});
+  return !!g&&(!g.getContextAttributes||g.getContextAttributes().colorSpace==='display-p3'); }catch(e){ return false; } })();
+// glaze over a level: amount, how far it has swept in from the left, and where it is heading
+const GLZ={amt:[0,0,0,0],rev:[1,1,1,1],tgt:[0,0,0,0]};
+let hoverLv=-1, pulseT=0;
+function setHover(i){ hoverLv=i; for(let k=0;k<4;k++) GLZ.tgt[k]=(k===i&&k!==sel&&mode==='levels')?1:0; wake(); }
+let pulsing=false;
+function pulse(i){ clearTimeout(pulseT); pulsing=true; for(let k=0;k<4;k++) GLZ.tgt[k]=k===i?1:0; wake(); pulseT=setTimeout(()=>{ pulsing=false; setHover(-1); },reduce?0:560); }
+function stepGlaze(dt){ let live=false;
+  for(let k=0;k<4;k++){ const t=GLZ.tgt[k];
+    if(t>GLZ.amt[k]){ if(GLZ.amt[k]===0) GLZ.rev[k]=reduce?1:0; GLZ.amt[k]=Math.min(t,GLZ.amt[k]+dt/.24); live=true; }
+    else if(t<GLZ.amt[k]){ GLZ.amt[k]=Math.max(t,GLZ.amt[k]-dt/.34); live=true; }
+    if(GLZ.amt[k]>0&&GLZ.rev[k]<1){ GLZ.rev[k]=Math.min(1,GLZ.rev[k]+dt/.62); live=true; } }
+  return live; }
+const FS=`
+uniform sampler2D uDisp; uniform sampler2D uHi; uniform sampler2D uDep;
+uniform vec2 uRes; uniform float uDPR; uniform vec2 uView; uniform vec2 uT; uniform float uS; uniform vec2 uImg;
+uniform vec2 uLat; uniform float uRad; uniform vec2 uC; uniform float uH0; uniform float uMix; uniform float uLod;
+uniform sampler2D uMask; uniform vec4 uGlz; uniform vec4 uRev;
+float dep(vec2 p){ return DEPS(uDep,p).r; }
+// the level under the pointer turns to a navy-and-champagne duotone, the villa's own colours:
+// no light is added or taken away, the level simply stands apart from the full-colour photograph
+vec3 glaze(vec3 c, float g){
+  float L=pow(dot(c,vec3(0.2126,0.7152,0.0722)),0.9);
+  vec3 lo=vec3(0.035,0.065,0.13), mid=vec3(0.60,0.46,0.27), hi=vec3(1.0,0.93,0.77);
+  vec3 duo=L<0.5?mix(lo,mid,L*2.0):mix(mid,hi,L*2.0-1.0);
+  return mix(c,duo,g*0.84);
+}
+void main(){
+  vec2 css=vec2(gl_FragCoord.x,uRes.y-gl_FragCoord.y)/uDPR;
+  vec2 uv=(css-uT)/(uS*uImg);
+  GRADS
+  if(uv.x<0.0||uv.y<0.0||uv.x>1.0||uv.y>1.0){ OUT=vec4(0.0); return; }
+  vec2 sp=css/uView;
+  float e=smoothstep(0.0,0.09,min(min(sp.x,1.0-sp.x),min(sp.y,1.0-sp.y)))*smoothstep(0.0,0.03,min(min(uv.x,1.0-uv.x),min(uv.y,1.0-uv.y)));
+  vec2 o=(uLat+(uv-uC)*uRad)*e;
+  vec2 s=uv;
+  if(dot(o,o)>1e-12){
+    float lam=1.0; vec2 p=uv-o*(lam-uH0); float h=dep(p);
+    vec2 pp=p; float hp=h; float lp=lam;
+    for(int i=1;i<=24;i++){
+      if(h>=lam) break;
+      pp=p; hp=h; lp=lam;
+      lam=1.0-float(i)/24.0;
+      p=uv-o*(lam-uH0); h=dep(p);
+    }
+    float fp=hp-lp; float f=h-lam; float d=fp-f;
+    float t=abs(d)>1e-6?clamp(fp/d,0.0,1.0):1.0;
+    s=mix(pp,p,t);
+  }
+  s=clamp(s,0.0,1.0);
+  vec3 a=SAMPD(uDisp,s);
+  vec3 b=SAMPH(uHi,s);
+  vec3 col=mix(a,b,uMix);
+  if(dot(uGlz,uGlz)>0.0){
+    vec3 m=DEPS(uMask,s).rgb;
+    float top=step(s.y,0.5);
+    vec4 w=vec4(m.r*top,m.g,m.b,m.r*(1.0-top));
+    vec4 tx=clamp((vec4(s.x)-vec4(0.31,0.19,0.025,0.52))/vec4(0.49,0.63,0.85,0.37),0.0,1.0);
+    vec4 r=uRev*1.3;
+    vec4 vis=vec4(1.0)-smoothstep(r-vec4(0.3),r,tx);
+    col=glaze(col,clamp(dot(w*uGlz*vis,vec4(1.0)),0.0,1.0));
+  }
+  OUT=vec4(col,1.0);
+}`;
+const HEAD2='#version 300 es\nprecision highp float;\nout vec4 fragColor;\n#define OUT fragColor\n#define DEPS(t,p) textureLod(t,p,0.0)\n#define GRADS vec2 gdx=dFdx(uv); vec2 gdy=dFdy(uv);\n#define SAMPD(t,p) textureGrad(t,p,gdx,gdy).rgb\n#define SAMPH(t,p) textureGrad(t,p,gdx*uLod,gdy*uLod).rgb\n';
+const HEAD1='#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n#define OUT gl_FragColor\n#define DEPS(t,p) texture2D(t,p)\n#define GRADS\n#define SAMPD(t,p) texture2D(t,p).rgb\n#define SAMPH(t,p) texture2D(t,p).rgb\n';
+function initGL(){
+  const opts={alpha:true,antialias:false,premultipliedAlpha:true,depth:false,stencil:false,powerPreference:'high-performance'};
+  try{ gl=cvs.getContext('webgl2',opts); GL2=!!gl; }catch(e){ gl=null; }
+  if(!gl){ try{ gl=cvs.getContext('webgl',opts)||cvs.getContext('experimental-webgl',opts); }catch(e){ gl=null; } }
+  if(!gl) return false;
+  const sh=(type,src)=>{ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+  try{
+    const vs=sh(gl.VERTEX_SHADER,GL2?'#version 300 es\nin vec2 aPos;void main(){gl_Position=vec4(aPos,0.0,1.0);}':'attribute vec2 aPos;void main(){gl_Position=vec4(aPos,0.0,1.0);}');
+    const fs=sh(gl.FRAGMENT_SHADER,(GL2?HEAD2:HEAD1)+FS);
+    prog=gl.createProgram(); gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.bindAttribLocation(prog,0,'aPos'); gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+  }catch(e){ console.warn('3D view unavailable, showing the photograph:',e); gl=null; return false; }
+  gl.useProgram(prog);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+  ['uDisp','uHi','uDep','uRes','uDPR','uView','uT','uS','uImg','uLat','uRad','uC','uH0','uMix','uLod','uMask','uGlz','uRev'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
+  gl.uniform1i(U.uDisp,0); gl.uniform1i(U.uHi,1); gl.uniform1i(U.uDep,2); gl.uniform1i(U.uMask,3);
+  maxTex=gl.getParameter(gl.MAX_TEXTURE_SIZE)||4096;
+  // photographs are Display P3: keep their full colour where the browser and screen allow it
+  if(P3&&'drawingBufferColorSpace' in gl){ try{ gl.drawingBufferColorSpace='display-p3'; gl.unpackColorSpace='display-p3'; }catch(e){} }
+  texDisp=newTex(); texHi=newTex(); texDep=newTex(); texMask=newTex();
+  cvs.addEventListener('webglcontextlost',e=>{ e.preventDefault(); gl=null; cvs.hidden=true; fb.hidden=false; wake(); });
+  return true;
+}
+function params(mips){ gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,mips?gl.LINEAR_MIPMAP_LINEAR:gl.LINEAR); }
+function newTex(){ const t=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,t); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([11,22,38,255])); params(false); return t; }
+function upload(t,src,mips,raw){ gl.bindTexture(gl.TEXTURE_2D,t); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false); gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);
+  gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL,raw?gl.NONE:gl.BROWSER_DEFAULT_WEBGL);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,src); params(mips); if(mips) gl.generateMipmap(gl.TEXTURE_2D); }
+function resized(img,w,h){ const c=document.createElement('canvas'); c.width=w; c.height=h; const g=c.getContext('2d',P3?{colorSpace:'display-p3'}:undefined); g.imageSmoothingEnabled=true; g.imageSmoothingQuality='high'; g.drawImage(img,0,0,w,h); return c; }
+function uploadHi(img){ if(!gl||!img||!img.naturalWidth) return;
+  let src=img;
+  if(!GL2){ const w=Math.min(4096,maxTex); src=resized(img,w,w/2); }               // WebGL 1 needs power-of-two sizes for mipmaps
+  else if(img.naturalWidth>maxTex){ src=resized(img,maxTex,Math.round(maxTex*IH/IW)); }
+  upload(texHi,src,true); hiSrc=img; }
+// a high-quality copy of the photograph at exactly its on-screen size: at rest the view is pixel-for-pixel the original
+function buildDisp(){ const src=bestImg(); if(!gl||!src||!src.naturalWidth) return;
+  const W=Math.round(IW*base.S*cam.s*DPR), H=Math.round(W*IH/IW);
+  if(W>maxTex||H>maxTex||W<2||W>src.naturalWidth){ dispReady=false; dispW=W; dispSrc=src; return; }   // enlarging: the full-size texture is already as sharp
+  upload(texDisp,resized(src,W,H),false); dispW=W; dispS=cam.s; dispSrc=src; dispReady=true; }
+
+function render(){
+  const T=effT();
+  if(!gl){ fb.style.transform=`translate3d(${T[0]}px,${T[1]}px,0) scale(${cam.s})`; return; }
+  gl.viewport(0,0,cvs.width,cvs.height); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.useProgram(prog);
+  gl.uniform2f(U.uRes,cvs.width,cvs.height); gl.uniform1f(U.uDPR,cvs.width/VW); gl.uniform2f(U.uView,VW,VH);
+  gl.uniform2f(U.uT,T[0],T[1]); gl.uniform1f(U.uS,base.S*cam.s); gl.uniform2f(U.uImg,IW,IH);
+  gl.uniform2f(U.uLat,OFF.lx,OFF.ly); gl.uniform1f(U.uRad,OFF.r); gl.uniform2f(U.uC,OFF.cx,OFF.cy); gl.uniform1f(U.uH0,OFF.h0);
+  gl.uniform1f(U.uMix,dispReady?mix:1); gl.uniform1f(U.uLod,.8);
+  gl.uniform4f(U.uGlz,...(maskReady?GLZ.amt:[0,0,0,0])); gl.uniform4f(U.uRev,...GLZ.rev);
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,texDisp);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,texHi);
+  gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D,texDep);
+  gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D,texMask);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+}
+
+/* =================== FRAME LOOP =================== */
+let raf=0, last=0, dirty=true, anim=null, prev=null, h0=H0, h0T=H0, dragging=false, settleT=0;
+let mode='intro', sel=null, selTok=0;
+function wake(){ dirty=true; if(!raf){ last=performance.now(); raf=requestAnimationFrame(frame); } }
+function animateCam(to,dur,ease=easeIO){ if(anim) anim.res(false);
+  return new Promise(res=>{ anim={f:{...cam},to,t0:performance.now(),dur:reduce?1:dur,ease,res}; wake(); }); }
+function frame(now){
+  raf=0; const dt=clamp((now-last)/1000,.001,.05); last=now; let live=false;
+  if(anim){ const a=anim, k=clamp((now-a.t0)/a.dur,0,1), e=a.ease(k);
+    const S0=base.S*a.f.s, S1=base.S*a.to.s;
+    const c0x=(VW/2-a.f.Tx)/S0, c0y=(VH/2-a.f.Ty)/S0, c1x=(VW/2-a.to.Tx)/S1, c1y=(VH/2-a.to.Ty)/S1;
+    cam.s=a.f.s*Math.pow(a.to.s/a.f.s,e); const S=base.S*cam.s;
+    cam.Tx=VW/2-lerp(c0x,c1x,e)*S; cam.Ty=VH/2-lerp(c0y,c1y,e)*S;
+    if(k>=1){ cam.s=a.to.s; cam.Tx=a.to.Tx; cam.Ty=a.to.Ty; anim=null; a.res(true); }
+    live=true; }
+  if(stepGlaze(dt)) live=true;
+  if(dragging) live=true;
+  else if(Math.abs(look.x)+Math.abs(look.y)+Math.abs(lookV.x)+Math.abs(lookV.y)>2e-4){
+    const K=34, C=2*Math.sqrt(K); lookV.x+=(-K*look.x-C*lookV.x)*dt; lookV.y+=(-K*look.y-C*lookV.y)*dt; look.x+=lookV.x*dt; look.y+=lookV.y*dt; live=true; }
+  else { look.x=look.y=lookV.x=lookV.y=0; }
+  // travel of the camera gives real parallax: near things slide further than far ones
+  const S=base.S*cam.s, cx=(VW/2-cam.Tx)/(S*IW), cy=(VH/2-cam.Ty)/(S*IH);
+  let tx=0,ty=0,tr=0;
+  if(prev){ tx=clamp(-KM*(cx-prev.cx)/dt,-.024,.024); ty=clamp(-KM*.55*(cy-prev.cy)/dt,-.016,.016); tr=clamp(KR*Math.log(cam.s/prev.s)/dt,-.075,.075); }
+  prev={cx,cy,s:cam.s};
+  const a=1-Math.exp(-dt/.12);
+  motion.x+=(tx-motion.x)*a; motion.y+=(ty-motion.y)*a; motion.r+=(tr-motion.r)*a;
+  if(!anim&&Math.abs(motion.x)+Math.abs(motion.y)+Math.abs(motion.r)<3e-5){ motion.x=motion.y=motion.r=0; } else live=true;
+  h0+=(h0T-h0)*(1-Math.exp(-dt/.25)); if(Math.abs(h0T-h0)<1e-4) h0=h0T; else live=true;
+  OFF.lx=look.x*LAT+motion.x; OFF.ly=look.y*LATY+motion.y; OFF.r=motion.r; OFF.cx=cx; OFF.cy=cy; OFF.h0=h0;
+  const exact=dispReady&&Math.abs(cam.s/dispS-1)<1e-6;
+  if(!exact) mix=1; else if(mix>0){ mix=Math.max(0,mix-dt/.22); live=true; }
+  if(dirty||live){ render(); placePins(); }
+  dirty=false;
+  if(live) raf=requestAnimationFrame(frame); else settle();
+}
+// once the camera rests, swap in an exact-size copy (and the full-resolution photograph if it has arrived)
+function settle(){ if(!gl||mode==='room') return;
+  const W=Math.round(IW*base.S*cam.s*DPR);
+  if(hiSrc===bestImg()&&W===dispW&&dispSrc===bestImg()) return;
+  clearTimeout(settleT); settleT=setTimeout(()=>{ if(anim||dragging||raf||mode==='room') return;
+    if(hiSrc!==bestImg()) uploadHi(bestImg());
+    buildDisp(); mix=1; wake(); },90); }
+
+/* =================== LEVEL INDEX, CAPTION, PINS =================== */
+const levelsEl=$('levels'), ind=$('ind');
+const railBtns=LEVELS.map((L,i)=>{ const li=document.createElement('li'); const b=document.createElement('button');
+  b.className='lv'; b.type='button'; b.setAttribute('aria-pressed','false'); b.setAttribute('aria-label',`Level ${L.no}, ${L.name}`);
+  b.innerHTML=`<span class="n">${L.no}</span><span class="t">${L.name}</span>`;
+  b.addEventListener('click',()=>selectLevel(i===sel?null:i));
+  b.addEventListener('pointerenter',e=>{ if(e.pointerType==='mouse'&&!pulsing) setHover(i); });
+  b.addEventListener('pointerleave',e=>{ if(e.pointerType==='mouse'&&!pulsing) setHover(-1); });
+  li.appendChild(b); levelsEl.appendChild(li); return b; });
+function renderRail(){ railBtns.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===sel)));
+  if(sel===null){ ind.style.opacity=0; return; }
+  const b=railBtns[sel]; ind.style.opacity=1;
+  ind.style.transform=MOBILE?`translateX(${b.parentNode.offsetLeft}px)`:`translateY(${b.parentNode.offsetTop}px)`; }
+function setPeek(i){ railBtns.forEach((b,k)=>b.classList.toggle('peek',k===i&&k!==sel)); }
+
+let capTimer=0;
+function fillCaption(){
+  const c=$('cta'), chips=$('chips');
+  if(sel===null){
+    $('capK').textContent='Kalkan · Virtual tour'; $('capT').textContent='Explore the villa';
+    $('capP').textContent=FACTS.line; $('facts').innerHTML=FACTS.items.map(t=>`<span>${t}</span>`).join(''); $('ctaG').hidden=false;
+    $('ctaT').textContent='Begin the tour'; c.disabled=false; chips.innerHTML=''; return; }
+  const L=LEVELS[sel], n=L.rooms.length, m=n||(L.marks||[]).length;
+  $('facts').innerHTML=''; $('ctaG').hidden=true;
+  $('capK').textContent=m?`Level ${L.no} · ${m} spaces`:`Level ${L.no}`; $('capT').textContent=L.name; $('capP').textContent=L.sub;
+  c.disabled=!n; $('ctaT').textContent=n?`Explore the ${L.name}`:'Photography to follow';
+  chips.innerHTML=L.rooms.map(id=>`<button class="chip" type="button" data-id="${id}"><img src="${thOf(id)}" alt="">${R[id].n}</button>`).join('');
+}
+function swapCaption(){ const c=$('cap'); c.classList.add('out'); clearTimeout(capTimer);
+  capTimer=setTimeout(()=>{ fillCaption(); $('chips').scrollLeft=0; c.classList.remove('out'); },reduce?0:340); }
+$('chips').addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(b) enterRoom(b.dataset.id); });
+$('cta').addEventListener('click',()=>{ if(mode!=='levels') return; if(sel===null) enterRoom(TOUR[0]); else if(LEVELS[sel].rooms.length) enterRoom(LEVELS[sel].lead); });
+
+let pinEls=[];
+function setPins(i){
+  pinEls.forEach(p=>{ p.el.classList.remove('on'); const el=p.el; setTimeout(()=>el.remove(),600); }); pinEls=[];
+  if(i===null||i===undefined) return;
+  LEVELS[i].rooms.slice().sort((a,b)=>R[a].at[0]-R[b].at[0]).forEach(id=>{ const r=R[id], b=document.createElement('button'); b.className='pin'; b.type='button';
+    b.setAttribute('aria-label',`${r.n}: open photographs`); b.innerHTML=`<i></i><span>${r.n}</span>`;
+    b.addEventListener('click',e=>{ e.stopPropagation(); enterRoom(id); });
+    pinsEl.appendChild(b); pinEls.push({el:b,r,side:''}); });
+  (LEVELS[i].marks||[]).forEach(r=>{ const d=document.createElement('div'); d.className='pin soon'; d.setAttribute('role','note');
+    d.innerHTML=`<i></i><span>${r.n}</span>`; pinsEl.appendChild(d); pinEls.push({el:d,r,side:''}); });
+  placePins(); layoutLabels(); pinEls.forEach((p,k)=>setTimeout(()=>p.el.classList.add('on'),reduce?0:60+k*75));
+}
+function placePins(){ for(const p of pinEls){ const q=project(p.r.at[0],p.r.at[1]);
+  p.el.style.transform=`translate3d(${q[0]}px,${q[1]}px,0) translate(-50%,-50%)`;
+  const side=q[0]>VW-(MOBILE?0:300)?'lft':q[0]<170?'rgt':'';           // keep labels clear of the level index and the edges
+  if(side!==p.side){ p.el.classList.remove('lft','rgt'); if(side) p.el.classList.add(side); p.side=side; } } }
+// labels never overlap each other or the interface: each sits above its pin, else below, else shows on hover only
+function layoutLabels(){
+  if(MOBILE||!pinEls.length) return;
+  const hit=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3];
+  const taken=[$('cap'),document.querySelector('.rail'),document.querySelector('.brand'),document.querySelector('.ctl')]
+    .map(el=>{ const b=el.getBoundingClientRect(); return [b.left-6,b.top-6,b.right+6,b.bottom+6]; });
+  const pts=pinEls.map(p=>project(p.r.at[0],p.r.at[1]));
+  pts.forEach(q=>taken.push([q[0]-9,q[1]-9,q[0]+9,q[1]+9]));
+  // labels are placed from left to right across the building
+  pinEls.map((p,k)=>k).sort((a,b)=>pinEls[a].r.at[0]-pinEls[b].r.at[0]).forEach(k=>{ const p=pinEls[k], sp=p.el.querySelector('span'), q=pts[k]; if(!sp) return;
+    if(!p.lw){ p.lw=sp.offsetWidth+6; p.lh=sp.offsetHeight+4; }
+    const x0=p.side==='lft'?q[0]+16-p.lw:p.side==='rgt'?q[0]-16:q[0]-p.lw/2;
+    const up=[x0,q[1]-12.5-p.lh,x0+p.lw,q[1]-12.5], dn=[x0,q[1]+12.5,x0+p.lw,q[1]+12.5+p.lh];
+    const free=r=>r[1]>4&&r[3]<VH-4&&!taken.some(t=>hit(r,t));
+    let cls=''; if(free(up)) taken.push(up); else if(free(dn)){ cls='below'; taken.push(dn); } else cls='nolab';
+    p.el.classList.toggle('below',cls==='below'); p.el.classList.toggle('nolab',cls==='nolab'); }); }
+
+const tag=$('htag'), hint=$('hint');
+let tagLevel=-1;
+function showTag(x,y,i){ const L=LEVELS[i];
+  if(tagLevel!==i){ tagLevel=i; const m=L.rooms.length||(L.marks||[]).length; $('htK').textContent=m?`Level ${L.no} · ${m} spaces`:`Level ${L.no}`; $('htT').textContent=L.name;
+    if(L.lead){ $('htImg').src=thOf(L.lead); tag.classList.remove('noimg'); } else tag.classList.add('noimg'); }
+  const w=tag.offsetWidth, h=tag.offsetHeight;
+  let tx=x+20, ty=y+22; if(tx+w>VW-12) tx=x-w-20; if(ty+h>VH-12) ty=y-h-18;
+  tag.style.transform=`translate3d(${tx}px,${ty}px,0)`; tag.style.opacity=1; }
+function hideTag(){ tag.style.opacity=0; }
+function showHint(){ if(mode!=='levels') return; hint.textContent=MOBILE?'Swipe to look around · Tap a level':'Drag to look around · Select a level'; hint.style.opacity=1; setTimeout(hideHint,5200); }
+function hideHint(){ hint.style.opacity=0; }
+
+/* =================== SELECTING A LEVEL =================== */
+async function selectLevel(i){
+  if(mode!=='levels') return;
+  const tok=++selTok; sel=i; hideTag(); setPeek(-1); hideHint(); if(!pulsing) setHover(hoverLv);
+  setPins(null); renderRail(); swapCaption();
+  const ok=await animateCam(levelView(i),i===null?1500:1700,easeIO);
+  if(!ok||tok!==selTok||mode!=='levels') return;
+  setPins(i);
+}
+
+/* =================== DRAG TO LOOK, CLICK TO SELECT =================== */
+function inPoly(x,y,poly){ let c=false; for(let i=0,j=poly.length-1;i<poly.length;j=i++){ const xi=poly[i][0],yi=poly[i][1],xj=poly[j][0],yj=poly[j][1]; if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi)) c=!c; } return c; }
+function levelAt(cx,cy){ const r=app.getBoundingClientRect(), q=unproject(cx-r.left,cy-r.top); return LEVELS.findIndex(L=>L.polys.some(p=>inPoly(q[0],q[1],p))); }
+let down=null;
+function onDown(e){ if(mode!=='levels'||e.button>0) return; down={x:e.clientX,y:e.clientY,lx:Math.atanh(clamp(look.x,-.99,.99)),ly:Math.atanh(clamp(look.y,-.99,.99)),moved:false,hist:[]}; try{ e.currentTarget.setPointerCapture(e.pointerId); }catch(_){} }
+function onMove(e){
+  const el=e.currentTarget;
+  if(down){ const dx=e.clientX-down.x, dy=e.clientY-down.y;
+    if(!down.moved&&Math.hypot(dx,dy)>6){ down.moved=true; dragging=true; el.classList.add('drag'); el.classList.remove('point'); hideTag(); setPeek(-1); hideHint(); if(!pulsing) setHover(-1); }
+    if(down.moved){ look.x=Math.tanh(down.lx+dx/(VW*.42)); look.y=Math.tanh(down.ly+dy/(VH*.42)); lookV.x=lookV.y=0;
+      down.hist.push([performance.now(),look.x,look.y]); if(down.hist.length>6) down.hist.shift(); wake(); }
+    return; }
+  if(mode!=='levels'||e.pointerType!=='mouse') return;
+  const i=levelAt(e.clientX,e.clientY); el.classList.toggle('point',i>=0); setPeek(i);
+  if(i!==hoverLv&&!pulsing) setHover(i);
+  if(i>=0) showTag(e.clientX,e.clientY,i); else hideTag();
+}
+function onUp(e){ if(!down) return; const d=down; down=null; e.currentTarget.classList.remove('drag');
+  if(d.moved){ dragging=false; const h=d.hist; if(h.length>1){ const a=h[0], b=h[h.length-1], t=(b[0]-a[0])/1000; if(t>.005){ lookV.x=clamp((b[1]-a[1])/t,-4,4); lookV.y=clamp((b[2]-a[2])/t,-4,4); } } wake(); return; }
+  if(mode!=='levels') return;
+  const i=levelAt(e.clientX,e.clientY);
+  if(i>=0){ if(i!==sel){ if(e.pointerType!=='mouse') pulse(i); selectLevel(i); } } else if(sel!==null) selectLevel(null); }
+function onCancel(e){ if(down&&down.moved){ dragging=false; wake(); } down=null; e.currentTarget.classList.remove('drag'); }
+[cvs,fb].forEach(el=>{ el.addEventListener('pointerdown',onDown); el.addEventListener('pointermove',onMove); el.addEventListener('pointerup',onUp); el.addEventListener('pointercancel',onCancel);
+  el.addEventListener('pointerleave',()=>{ if(!down&&mode==='levels'){ hideTag(); setPeek(-1); el.classList.remove('point'); if(!pulsing) setHover(-1); } }); });
+
+/* =================== ROOMS =================== */
+const shots=[...document.querySelectorAll('#stage .shot')]; let front=0, moveN=0;
+const STEP=6.5;
+function startMove(img){ img.getAnimations().forEach(a=>a.cancel()); if(reduce) return;
+  const d=(moveN++%2)?1:-1;   // the whole photograph drifts sideways at one scale: nothing inside it bends
+  img.animate([{transform:`translate3d(${1.4*d}%,0,0) scale(1.04)`},{transform:`translate3d(${-1.4*d}%,0,0) scale(1.04)`}],{duration:(STEP+1.6)*1000,easing:'linear',fill:'forwards'}); }
+async function showPhoto(src,ms,alt){ const ld=await loadImg(src);
+  const nxt=shots[1-front], cur=shots[front], im=nxt.querySelector('img'); im.src=(ld&&ld.naturalWidth&&ld.src)||src; im.alt=alt||''; startMove(im);
+  nxt.style.transition='none'; nxt.style.opacity=0; nxt.style.zIndex=2; cur.style.zIndex=1; void nxt.offsetWidth;
+  nxt.style.transition=`opacity ${reduce?0:ms}ms ease`; nxt.style.opacity=1;
+  await wait(ms); cur.style.transition='none'; cur.style.opacity=0; front=1-front; }
+function hidePhotos(ms){ shots.forEach(s=>{ s.style.transition=`opacity ${reduce?0:ms}ms ease`; s.style.opacity=0; }); return wait(ms); }
+
+let si=0, playing=true, stepT=0, roomBusy=false, roomRaf=0, roomLast=0, pendingBack=false, pendingJump=null;
+const pad2=n=>String(n).padStart(2,'0');
+function showTitle(id){ const r=R[id];
+  if(r.li===null) $('tK').textContent='Villa Lavaya · Kalkan';
+  else { const L=LEVELS[r.li]; $('tK').textContent=`${L.name} · ${pad2(L.rooms.indexOf(id)+1)} / ${pad2(L.rooms.length)}`; }
+  $('tT').textContent=r.n; $('tS').textContent=r.s; $('title').classList.add('on'); }
+function updateCount(){ const s=SEQ[si]; $('count').textContent=`${s[1]+1} / ${R[s[0]].p.length}`; }
+const seqIndex=(id,k)=>SEQ.findIndex(s=>s[0]===id&&s[1]===k);
+// the camera moves in towards a room's window while its first photograph fades in
+function pushTo(r){ if(!r.at) return Promise.resolve(true);
+  const s2=snapS(Math.min(Math.max(cam.s*1.75,1.9),2.7)), S2=base.S*s2, a=area();
+  const to=clampT({s:s2,Tx:VW/2-r.at[0]*S2,Ty:(MOBILE?a.y+a.h/2:VH*.48)-r.at[1]*S2});
+  h0T=clamp(depthAt(r.at[0]/IW,r.at[1]/IH),0,1);          // the window we fly towards stays put while the rest moves around it
+  return animateCam(to,1400,easeIO); }
+async function enterRoom(id,k=0){
+  if(mode!=='levels') return;
+  const r=R[id], li=r.li; mode='flying'; selTok++; hideTag(); setPeek(-1); hideHint(); setHover(-1);
+  if(sel!==li){ sel=li; renderRail(); fillCaption(); }
+  setPins(null); app.classList.add('flying');
+  const src=srcOf(id,k), first=loadImg(src);
+  const push=pushTo(r);
+  await Promise.all([wait(r.at?720:260),first]);
+  showTitle(id);
+  await showPhoto(src,620,`${r.n}, photograph ${k+1}`);
+  await push;
+  si=Math.max(0,seqIndex(id,k));
+  renderRoomBar(id); markRoom(id); updateCount();
+  mode='room'; app.classList.remove('flying'); app.classList.add('room-mode');
+  playing=!reduce; setPlay(); stepT=0; roomLast=performance.now(); if(!roomRaf) roomRaf=requestAnimationFrame(roomTick);
+  for(let n=1;n<=3;n++){ const q=SEQ[(si+n)%SEQ.length]; loadImg(srcOf(q[0],q[1])); }
+}
+function roomTick(now){ roomRaf=0; if(mode!=='room') return; const dt=Math.min(.1,(now-roomLast)/1000); roomLast=now;
+  if(playing&&!roomBusy){ stepT+=dt; if(stepT>=STEP){ stepT=0; go(si+1,false); } }
+  $('prog').style.width=Math.min(100,stepT/STEP*100)+'%'; roomRaf=requestAnimationFrame(roomTick); }
+async function go(j,manual){
+  if(roomBusy||mode!=='room') return; roomBusy=true; if(manual){ playing=false; setPlay(); }
+  const from=SEQ[si][0]; si=(j+SEQ.length)%SEQ.length; const id=SEQ[si][0], k=SEQ[si][1];
+  if(R[id].li!==R[from].li) await interlude(id,k);
+  else {
+    if(id!==from){ markRoom(id); $('title').classList.remove('on'); }
+    await showPhoto(srcOf(id,k),id!==from?560:440,`${R[id].n}, photograph ${k+1}`);
+    if(id!==from) showTitle(id);
+  }
+  updateCount(); stepT=0;
+  const n=SEQ[(si+1)%SEQ.length]; loadImg(srcOf(n[0],n[1]));
+  roomBusy=false;
+  if(pendingBack){ pendingBack=false; pendingJump=null; backToLevels(); return; }
+  if(pendingJump!==null){ const q=pendingJump; pendingJump=null; if(q!==si) go(q,true); } }
+function jumpTo(j){ if(mode!=='room'||j<0) return; if(roomBusy) pendingJump=j; else if(j!==si) go(j,true); }
+// moving to another level: the photograph clears, the camera rises to that level of the building,
+// which takes on the villa's glaze for a moment under its name, then the camera moves in to the room
+async function interlude(id,k){
+  const r=R[id], li=r.li, L=li===null?null:LEVELS[li], first=loadImg(srcOf(id,k));
+  app.classList.remove('room-mode'); app.classList.add('flying','between'); $('title').classList.remove('on');
+  await hidePhotos(650);
+  sel=li; renderRail(); h0T=H0;
+  const glide=animateCam(levelView(li),1600,easeIO);
+  await wait(420);
+  $('tK').textContent=L?`Level ${L.no}`:'Villa Lavaya · Kalkan'; $('tT').textContent=L?L.name:r.n; $('tS').textContent=L?L.sub:r.s;
+  $('title').classList.add('on');
+  await wait(300);
+  if(L){ for(let q=0;q<4;q++) GLZ.tgt[q]=q===li?1:0; wake(); }
+  await Promise.all([glide,first,wait(1700)]);
+  for(let q=0;q<4;q++) GLZ.tgt[q]=0; wake();
+  $('title').classList.remove('on');
+  await wait(380);
+  const push=pushTo(r);
+  await wait(r.at?720:200);
+  showTitle(id); renderRoomBar(id); markRoom(id);
+  await showPhoto(srcOf(id,k),620,`${r.n}, photograph ${k+1}`);
+  await push;
+  app.classList.remove('flying','between'); app.classList.add('room-mode');
+}
+async function backToLevels(){
+  if(mode!=='room') return;
+  if(roomBusy){ pendingBack=true; return; }
+  mode='flying';
+  app.classList.remove('room-mode'); app.classList.add('flying'); $('title').classList.remove('on');
+  await hidePhotos(560);
+  await animateCam(levelView(sel),1400,easeIO);
+  h0T=H0; mode='levels'; app.classList.remove('flying'); swapCaption(); renderRail(); setPins(sel);
+}
+function renderRoomBar(id){ const li=R[id].li, rs=$('rooms'); rs.innerHTML='';
+  (li===null?['hava']:LEVELS[li].rooms).forEach(rid=>{ const b=document.createElement('button'); b.className='rc'; b.type='button'; b.dataset.id=rid;
+    b.innerHTML=`<img src="${thOf(rid)}" alt="">${R[rid].n}`;
+    b.addEventListener('click',()=>{ if(SEQ[si][0]===rid) return; const j=seqIndex(rid,0); if(j>=0) go(j,true); });
+    rs.appendChild(b); }); }
+function markRoom(id){ const rs=$('rooms'); rs.querySelectorAll('.rc').forEach(b=>{ const on=b.dataset.id===id; b.setAttribute('aria-current',String(on));
+  if(on) rs.scrollTo({left:b.offsetLeft-rs.clientWidth/2+b.offsetWidth/2,behavior:reduce?'auto':'smooth'}); }); }
+function setPlay(){ $('playIcon').innerHTML=playing?'<path d="M9 6v12M15 6v12"/>':'<path d="M8 5l11 7-11 7z"/>'; $('bPlay').setAttribute('aria-label',playing?'Pause slideshow':'Play slideshow'); }
+$('bPlay').addEventListener('click',()=>{ playing=!playing; setPlay(); stepT=0; });
+$('bBack').addEventListener('click',backToLevels);
+$('next').addEventListener('click',()=>go(si+1,true)); $('prev').addEventListener('click',()=>go(si-1,true));
+let sw=null; const stageEl=$('stage');
+stageEl.addEventListener('pointerdown',e=>{ sw={x:e.clientX,t:performance.now()}; try{ stageEl.setPointerCapture(e.pointerId); }catch(_){} });
+stageEl.addEventListener('pointercancel',()=>{ sw=null; });
+stageEl.addEventListener('pointerup',e=>{ if(!sw) return; const dx=e.clientX-sw.x, dt=performance.now()-sw.t; sw=null; if(mode==='room'&&Math.abs(dx)>50&&dt<700) go(si+(dx<0?1:-1),true); });
+
+/* =================== GALLERY =================== */
+const gal=$('gal'), gbody=$('gbody'), gnav=$('gnav');
+let galOpen=false, galBuilt=false, galWasPlaying=false, galIO=null, galFrom=null;
+const SECTIONS=[...(R.hava.p.length?[{id:'g-air',k:'Villa Lavaya',t:'From Above',rooms:['hava']}]:[]),
+  ...TOUR_LEVELS.map(i=>{ const L=LEVELS[i]; return {id:'g-'+L.id,k:`Level ${L.no}`,t:L.name,rooms:tourRooms(L)}; })];
+function buildGallery(){
+  galBuilt=true;
+  gnav.innerHTML=SECTIONS.map(s=>`<button type="button" data-to="${s.id}">${s.t}</button>`).join('');
+  gbody.innerHTML=SECTIONS.map(s=>`<section class="gsec" id="${s.id}"><div class="k">${s.k}</div><h3>${s.t}</h3>${
+    s.rooms.map(id=>`<div class="groom" data-room="${id}">${s.rooms.length===1&&R[id].n===s.t?'':`<h4>${R[id].n}<small>${R[id].p.length}</small></h4>`}<div class="ggrid">${
+      R[id].p.map((_,k)=>`<button class="gi" type="button" data-id="${id}" data-k="${k}" aria-label="${R[id].n}, photograph ${k+1}"><img data-src="${galOf(id,k)}" alt="" draggable="false"></button>`).join('')
+    }</div></div>`).join('')}</section>`).join('');
+  const show=im=>{ im.onload=()=>im.classList.add('ld'); im.src=im.dataset.src; };
+  const imgs=gbody.querySelectorAll('img[data-src]');
+  if('IntersectionObserver' in window){
+    galIO=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ galIO.unobserve(en.target); show(en.target); } }),{root:gal,rootMargin:'900px 0px'});
+    imgs.forEach(im=>galIO.observe(im)); }
+  else imgs.forEach(show);
+  gnav.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const t=$(b.dataset.to); if(!t) return;
+    gal.scrollTo({top:t.getBoundingClientRect().top-gal.getBoundingClientRect().top+gal.scrollTop-$('gh').offsetHeight+8,behavior:reduce?'auto':'smooth'}); });
+  gbody.addEventListener('click',e=>{ const b=e.target.closest('.gi'); if(b) pickPhoto(b.dataset.id,+b.dataset.k); });
+  gal.addEventListener('scroll',markNav,{passive:true});
+}
+function markNav(){ const top=$('gh').offsetHeight+40; let cur=SECTIONS[0].id;
+  for(const s of SECTIONS){ const el=$(s.id); if(el&&el.getBoundingClientRect().top-gal.getBoundingClientRect().top<=top) cur=s.id; }
+  gnav.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.to===cur))); }
+function openGallery(){
+  if(galOpen||!(mode==='levels'||mode==='room')) return;
+  if(!galBuilt) buildGallery();
+  galOpen=true; galFrom=document.activeElement; hideTag(); hideHint(); setPeek(-1); if(mode==='levels') setHover(-1);
+  galWasPlaying=mode==='room'&&playing; if(galWasPlaying){ playing=false; setPlay(); }
+  gbody.querySelectorAll('.gi.cur').forEach(b=>b.classList.remove('cur'));
+  // open where the visitor is: on the photograph being shown, or on the chosen level
+  let target=null;
+  if(mode==='room'){ const s=SEQ[si], b=gbody.querySelector(`.gi[data-id="${s[0]}"][data-k="${s[1]}"]`); if(b){ b.classList.add('cur'); target=b.closest('.groom'); } }
+  else if(sel!==null) target=$('g-'+LEVELS[sel].id);
+  gal.scrollTop=0;
+  if(target) gal.scrollTop=Math.max(0,target.getBoundingClientRect().top-gal.getBoundingClientRect().top-$('gh').offsetHeight-(target.classList.contains('gsec')?-8:24));
+  markNav();
+  gal.classList.add('open'); gal.setAttribute('aria-hidden','false');
+  setTimeout(()=>{ try{ $('gx').focus({preventScroll:true}); }catch(e){} },60);
+}
+function closeGallery(resume=true){
+  if(!galOpen) return; galOpen=false;
+  gal.classList.remove('open'); gal.setAttribute('aria-hidden','true');
+  if(resume&&galWasPlaying&&mode==='room'){ playing=true; setPlay(); stepT=0; }
+  galWasPlaying=false;
+  if(resume&&galFrom&&galFrom.focus){ try{ galFrom.focus({preventScroll:true}); }catch(e){} }
+}
+function pickPhoto(id,k){
+  closeGallery(false);
+  if(mode==='levels') enterRoom(id,k);
+  else if(mode==='room') jumpTo(seqIndex(id,k));
+}
+$('bGal').addEventListener('click',openGallery); $('ctaG').addEventListener('click',openGallery); $('gx').addEventListener('click',()=>closeGallery());
+
+/* =================== FULL SCREEN (where the page is allowed to) =================== */
+const bFs=$('bFs'), fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+if(document.fullscreenEnabled||document.webkitFullscreenEnabled){
+  bFs.hidden=false;
+  bFs.addEventListener('click',()=>{ const d=document, el=d.documentElement;
+    const p=fsEl()?(d.exitFullscreen||d.webkitExitFullscreen).call(d):(el.requestFullscreen||el.webkitRequestFullscreen).call(el);
+    if(p&&p.catch) p.catch(()=>{}); });
+  const fsIcon=()=>{ const on=!!fsEl(); $('fsIcon').innerHTML=on?'<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/>':'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>';
+    bFs.setAttribute('aria-label',on?'Exit full screen':'Full screen'); };
+  document.addEventListener('fullscreenchange',fsIcon); document.addEventListener('webkitfullscreenchange',fsIcon);
+}
+
+/* =================== MUSIC: lounge music fades in softly with the first touch, click or key =================== */
+const MUSIC_VOL=.32, SND_ON='<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
+  SND_OFF='<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>';
+const music=new Audio(); music.preload='none'; music.loop=true; music.src='audio/lounge.mp3';
+let musicOn=true, musicPlaying=false, actx=null, gain=null, fadeRaf=0;
+try{ musicOn=localStorage.getItem('lv-music')!=='off'; }catch(e){}
+const musicVol=()=>gain?gain.gain.value:music.volume;
+const setMusicVol=v=>{ if(gain) gain.gain.value=v; else music.volume=v; };
+function fadeMusic(to,ms,done){ cancelAnimationFrame(fadeRaf); const from=musicVol(), t0=performance.now();
+  const step=now=>{ const k=reduce?1:Math.min(1,(now-t0)/ms); setMusicVol(from+(to-from)*k); if(k<1) fadeRaf=requestAnimationFrame(step); else if(done) done(); };
+  fadeRaf=requestAnimationFrame(step); }
+// phones ignore an audio element's volume, so the level goes through a gain node where the browser has one
+function audioGraph(){ if(actx) return; const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+  try{ actx=new AC(); gain=actx.createGain(); gain.gain.value=0; actx.createMediaElementSource(music).connect(gain).connect(actx.destination); }catch(e){ actx=null; gain=null; } }
+const GESTURES=['pointerdown','touchend','click','keydown'];
+function playMusic(){   // runs inside the visitor's own touch, click or key press
+  audioGraph(); if(actx&&actx.state==='suspended') actx.resume().catch(()=>{});
+  setMusicVol(0); const p=music.play();
+  const ok=()=>{ musicPlaying=true; GESTURES.forEach(t=>removeEventListener(t,firstGesture,true)); fadeMusic(MUSIC_VOL,2600); };
+  if(p&&p.then) p.then(ok).catch(()=>{}); else ok(); }
+function pauseMusic(){ fadeMusic(0,700,()=>{ music.pause(); musicPlaying=false; }); }
+function setSoundUI(){ ['bSnd','ctaS'].forEach(id=>{ const b=$(id); if(!b) return;
+  b.querySelector('svg').innerHTML=musicOn?SND_ON:SND_OFF; b.setAttribute('aria-label',musicOn?'Turn music off':'Turn music on'); b.setAttribute('aria-pressed',String(musicOn)); }); }
+function toggleMusic(){ musicOn=!musicOn; try{ localStorage.setItem('lv-music',musicOn?'on':'off'); }catch(e){}
+  if(musicOn) playMusic(); else pauseMusic(); setSoundUI(); }
+function firstGesture(e){ if(e.target&&e.target.closest&&e.target.closest('#bSnd,#ctaS')) return; if(musicOn&&!musicPlaying) playMusic(); }
+GESTURES.forEach(t=>addEventListener(t,firstGesture,true));
+['bSnd','ctaS'].forEach(id=>{ const b=$(id); if(b) b.addEventListener('click',e=>{ e.stopPropagation(); toggleMusic(); }); });
+document.addEventListener('visibilitychange',()=>{ if(!musicOn||!musicPlaying) return;
+  if(document.hidden) music.pause(); else { const p=music.play(); if(p&&p.catch) p.catch(()=>{}); } });
+setSoundUI();
+
+addEventListener('keydown',e=>{
+  if(galOpen){ if(e.key==='Escape'){ e.preventDefault(); closeGallery(); } return; }
+  if((e.key==='g'||e.key==='G')&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&(mode==='levels'||mode==='room')){ openGallery(); return; }
+  if(mode==='levels'){
+    if(e.key==='ArrowUp'){ e.preventDefault(); selectLevel(sel===null?2:Math.max(0,sel-1)); }
+    else if(e.key==='ArrowDown'){ e.preventDefault(); selectLevel(sel===null?2:Math.min(LEVELS.length-1,sel+1)); }
+    else if(e.key==='Escape'&&sel!==null) selectLevel(null); }
+  else if(mode==='room'){
+    if(e.key==='ArrowRight') go(si+1,true); else if(e.key==='ArrowLeft') go(si-1,true);
+    else if(e.key==='Escape') backToLevels(); else if(e.key===' '){ e.preventDefault(); $('bPlay').click(); } } });
+
+let rz=0;
+addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ const wasMobile=MOBILE; layout(); prev=null;
+  if(mode==='levels'||mode==='intro'){ if(anim){ anim.res(false); anim=null; } Object.assign(cam,levelView(sel)); if(mode==='levels'&&sel!==null&&!pinEls.length) setPins(sel); }
+  dispReady=false; dispW=0; renderRail(); if(wasMobile!==MOBILE||mode!=='room') fillCaption(); wake();
+  requestAnimationFrame(()=>{ placePins(); layoutLabels(); }); },120); });
+
+/* =================== LOADING =================== */
+const rule=document.querySelector('#mark .rule');
+document.querySelectorAll('#mark .mono path').forEach(p=>{ try{ p.style.setProperty('--len',Math.ceil(p.getTotalLength())+4); }catch(e){} });
+let progress=0; const setProgress=p=>{ progress=Math.max(progress,p); if(rule) rule.style.transform=`scaleX(${progress})`; };
+async function boot(){
+  const T0=performance.now();
+  layout(); decideHD();
+  const glOK=initGL();
+  if(!glOK){ cvs.hidden=true; fb.hidden=false; }
+  const needBig=!MOBILE&&IW*base.S*DPR>2520;
+  const pFonts=(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).catch(()=>{}).then(()=>setProgress(.12));
+  const pDep=loadImg('d/hero_v3.png').then(img=>{ readDepth(img); if(gl&&img.naturalWidth) upload(texDep,img,false,true); setProgress(.3); });
+  loadImg('d/floors.png').then(img=>{ if(gl&&img.naturalWidth){ upload(texMask,img,false,true); maskReady=true; } });
+  const pMid=loadImg('img/hero2400.jpg').then(img=>{ IMG.mid=img; fb.src=img.src; setProgress(.55); });
+  await Promise.all([pDep,pMid]);
+  if(needBig){ const big=await Promise.race([loadImg('img/hero4800.jpg'),wait(9000).then(()=>null)]);
+    if(big&&big.naturalWidth){ IMG.big=big; fb.src=big.src; } setProgress(.85); }
+  const home=homeView();
+  if(gl){ uploadHi(bestImg()); Object.assign(cam,home); buildDisp(); }
+  // the tour opens a little closer and settles back into the full view
+  const s0=snapS(1.08), S0=base.S*s0, Sh=base.S*home.s, chx=(VW/2-home.Tx)/Sh, chy=(VH/2-home.Ty)/Sh;
+  Object.assign(cam,{s:s0,Tx:VW/2-chx*S0,Ty:VH/2-chy*S0});
+  render(); setProgress(1);
+  await pFonts;
+  const left=(reduce?600:3500)-(performance.now()-T0); if(left>0) await new Promise(r=>setTimeout(r,left));
+  fillCaption();
+  $('veil').classList.add('out'); setTimeout(()=>{ const v=$('veil'); if(v) v.remove(); },1500);
+  mode='levels'; app.classList.remove('intro');
+  animateCam(home,2800,easeOut);
+  setTimeout(showHint,1800);
+  setTimeout(()=>{ ['salon','turkuaz','havuz','yesil','bahceoda'].forEach(id=>loadImg(srcOf(id,0))); LEVELS.forEach(L=>{ if(L.lead) loadImg(thOf(L.lead)); }); },2600);
+  // on larger screens the full-resolution photograph follows, for close-ups of each level
+  if(!MOBILE&&!IMG.big) setTimeout(()=>loadImg('img/hero4800.jpg').then(big=>{ if(!big.naturalWidth) return; IMG.big=big; fb.src=big.src; if(!raf) settle(); }),3200);
+}
+boot();
+})();
+</script>
+
+</body></html>
