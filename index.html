@@ -644,7 +644,7 @@ html.has-ptr [data-cur],html.has-ptr [data-cur] *{cursor:none}
 <!-- ============ HOME ============ -->
 <div class="view" data-view="home">
   <section class="hero" id="hero" aria-label="Öne çıkan fotoğraflar" data-i18n-aria="aHero">
-    <div class="slides" id="slides"><div class="sl on"><img src="img/l001.jpg" alt="Villa — İlke Can Övet" style="object-position:50% 55%" fetchpriority="high" loading="lazy" draggable="false"></div></div>
+    <div class="slides" id="slides"><div class="sl on"><img src="img/l180.jpg" alt="Travel World — İlke Can Övet" style="object-position:40% 50%" fetchpriority="high" loading="lazy" draggable="false"></div></div>
     <div class="hshade"></div>
     <div class="hveil"></div>
     <div class="hz hz-p" data-hgo="-1" data-cur="prev" aria-hidden="true"></div>
@@ -661,7 +661,7 @@ html.has-ptr [data-cur],html.has-ptr [data-cur] *{cursor:none}
       </div>
       <span class="scue" aria-hidden="true"></span>
       <div class="hidx">
-        <div class="hcap lbl"><span class="cn"><b id="hcn">Villa</b></span><span class="no"><b id="hno">01</b><i aria-hidden="true"></i><span id="htot">08</span></span></div>
+        <div class="hcap lbl"><span class="cn"><b id="hcn">Travel World</b></span><span class="no"><b id="hno">01</b><i aria-hidden="true"></i><span id="htot">08</span></span></div>
         <div class="hctl">
           <div class="segs" id="segs" role="group" aria-label="Fotoğraf seçin" data-i18n-aria="aSegs"></div>
           <div class="hnav"><button type="button" class="hb" id="hPrev" aria-label="Önceki fotoğraf" data-i18n-aria="aPrevP"><svg viewBox="0 0 18 9" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M18 4.5H1.5M5 1 1.5 4.5 5 8"/></svg></button><button type="button" class="hb" id="hNext" aria-label="Sonraki fotoğraf" data-i18n-aria="aNextP"><svg viewBox="0 0 18 9" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 4.5h16.5M13 1l3.5 3.5L13 8"/></svg></button></div>
@@ -1046,7 +1046,7 @@ function killView(){
 
 /* ---------------- HERO ---------------- */
 /* sh: shade behind the wordmark, stronger where the middle of the frame is bright */
-const HERO=[{c:'villa',id:'001',pos:'50% 55%',sh:.36},{c:'dugun',id:'078',pos:'49% 40%',sh:.32},{c:'villa',id:'116',pos:'50% 50%',sh:.54},{c:'villa',id:'021',pos:'86% 50%',sh:.3},{c:'dugun',id:'120',pos:'38% 40%',sh:.42},{c:'villa',id:'104',pos:'36% 50%',sh:.48},{c:'villa',id:'082',pos:'50% 50%',sh:.52},{c:'villa',id:'017',pos:'56% 50%',sh:.46}];
+const HERO=[{c:'travel',id:'180',pos:'40% 50%',sh:.4},{c:'travel',id:'179',pos:'38% 60%',sh:.42},{c:'villa',id:'116',pos:'50% 50%',sh:.54},{c:'villa',id:'106',pos:'30% 50%',sh:.42},{c:'villa',id:'107',pos:'28% 50%',sh:.46},{c:'dugun',id:'118',pos:'48% 55%',sh:.46},{c:'dugun',id:'120',pos:'38% 40%',sh:.42},{c:'villa',id:'048',pos:'70% 50%',sh:.5}];
 const N=HERO.length,DUR=6.5;
 /* A slide's photograph is requested only when it is about to be needed: the first when the home view opens, then always one ahead.
    The first slide is already in the markup, so it can paint before this script runs; it is rebuilt only if it no longer matches the list above. */
